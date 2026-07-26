@@ -14,21 +14,25 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 :root{
-  --kraft:#F3EDDF;--paper:#FCFAF3;--ink:#26323C;--muted:#7A7567;--line:#E3DAC6;
-  --navy:#1E3A52;--navy-2:#16293b;--navy-soft:#E0E7EC;
-  --orange:#E07D2B;--orange-2:#c96d22;--orange-soft:#FAE7D2;
-  --amber:#CF9412;--amber-soft:#F6E8C5;
-  --blue:#2E6E9E;--blue-soft:#DBE8F1;
-  --green:#4E8D5B;--green-soft:#DEEBDF;--green-deep:#2F5A41;
-  --r:16px;--shadow:0 18px 38px -26px rgba(38,50,60,.6);--shadow-color:rgba(38,50,60,.6);
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  /* surfaces: warm but light, no cardboard */
+  --kraft:#F7F4EE;--paper:#FFFFFF;--ink:#1C2120;--muted:#5C594F;--line:#E5E0D6;
+  /* one primary action colour, deep enough to carry white text */
+  --orange:#B4551E;--orange-2:#944316;--orange-soft:#F6EAE1;
+  --navy:#1C2120;--navy-2:#0E1211;--navy-soft:#ECEAE5;
+  --amber:#8A6A17;--amber-soft:#F2E9D4;
+  --blue:#2B5F86;--blue-soft:#E5EBF1;
+  --green:#3E7A57;--green-soft:#E6EDE8;--green-deep:#254D3A;
+  --r:12px;--shadow:0 12px 28px -20px rgba(28,33,32,.35);--shadow-color:rgba(28,33,32,.35);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Hanken Grotesk',sans-serif;color:var(--ink);
+  font-family:var(--font-ui);color:var(--ink);
   background-color:var(--kraft);
   background-image:
     radial-gradient(circle at 6% 4%,rgba(224,125,43,.20),transparent 30%),
@@ -42,7 +46,7 @@ body{
   line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
 }
 .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
-h1,h2,h3,.slab{font-family:'Bricolage Grotesque',sans-serif}
+h1,h2,h3,.slab{font-family:var(--font-ui)}
 .ruler{height:9px;background:repeating-linear-gradient(90deg,var(--orange) 0 1.5px,transparent 1.5px 14px);opacity:.55;border-radius:2px;margin:10px 0 0}
 :focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 
@@ -75,16 +79,16 @@ a.btn{text-decoration:none}
 .lnav-in{max-width:1120px;margin:0 auto;padding:0 22px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .lnav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
 .lnav-brand img{width:38px;height:38px;border-radius:50%;box-shadow:0 6px 16px -8px rgba(30,58,82,.5)}
-.lnav-brand b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-.02em}
+.lnav-brand b{font-family:var(--font-ui);font-weight:800;font-size:1.3rem;letter-spacing:-.02em}
 .lnav-links{display:flex;gap:4px}
-.lnav-links a{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:.95rem;color:var(--ink);opacity:.72;text-decoration:none;padding:8px 13px;border-radius:9px;transition:.15s}
+.lnav-links a{font-family:var(--font-ui);font-weight:600;font-size:.95rem;color:var(--ink);opacity:.72;text-decoration:none;padding:8px 13px;border-radius:9px;transition:.15s}
 .lnav-links a:hover{opacity:1;background:rgba(38,50,60,.06)}
 .lnav-cta{display:flex;gap:10px;align-items:center}
 .lnav-cta .btn{padding:10px 18px;font-size:.95rem;white-space:nowrap}
 
 /* hero */
 .lhero{position:relative;max-width:1120px;margin:0 auto;padding:96px 22px 110px;text-align:center;scroll-margin-top:80px}
-.lhero-badge{display:inline-flex;align-items:center;gap:9px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:7px 17px 7px 8px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.87rem;color:var(--ink);box-shadow:0 10px 22px -16px var(--shadow-color)}
+.lhero-badge{display:inline-flex;align-items:center;gap:9px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:7px 17px 7px 8px;font-family:var(--font-ui);font-weight:700;font-size:.87rem;color:var(--ink);box-shadow:0 10px 22px -16px var(--shadow-color)}
 .lhero-badge img{width:27px;height:27px;border-radius:50%}
 .lhero h1{font-weight:800;font-size:clamp(2.7rem,7.4vw,5.1rem);line-height:1.02;letter-spacing:-.03em;margin:28px auto 0;max-width:15ch}
 .swash{position:relative;display:inline-block;color:var(--orange-2)}
@@ -104,7 +108,7 @@ a.btn{text-decoration:none}
 .lband::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(38,50,60,.66),rgba(47,90,65,.78))}
 .lband-in{position:relative;max-width:780px;margin:0 auto;color:#FCFAF3}
 .lband .leyebrow{color:#EFD9A6}
-.lband h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.02em;line-height:1.1;margin-top:10px}
+.lband h2{font-family:var(--font-ui);font-weight:800;font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.02em;line-height:1.1;margin-top:10px}
 .lband p{color:#E6EFE2;font-size:1.05rem;line-height:1.65;margin:13px auto 0;max-width:52ch}
 
 /* workbench photo gallery */
@@ -114,7 +118,7 @@ a.btn{text-decoration:none}
 .lshot:nth-child(even){transform:rotate(1.2deg)}
 .lshot:hover{transform:rotate(0deg) translateY(-4px);box-shadow:0 26px 44px -28px var(--shadow-color)}
 .lshot img{width:100%;height:150px;object-fit:cover;border-radius:7px;display:block}
-.lshot figcaption{font-family:'Bricolage Grotesque',sans-serif;font-size:.82rem;color:#5d5949;font-weight:700;margin-top:9px;text-align:center}
+.lshot figcaption{font-family:var(--font-ui);font-size:.82rem;color:#5d5949;font-weight:700;margin-top:9px;text-align:center}
 @media(max-width:860px){.lgallery{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){.lshot,.lshot:hover{transform:none}}
 
@@ -125,14 +129,14 @@ a.btn{text-decoration:none}
 .profile-btn svg{width:22px;height:22px;color:#6f6a5c}
 .profile-btn.is-in{border-color:rgba(38,50,60,.12)}
 .profile-btn.is-in svg{display:none}
-.profile-btn .pf-initial{display:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.02rem;color:#fff;line-height:1}
+.profile-btn .pf-initial{display:none;font-family:var(--font-ui);font-weight:800;font-size:1.02rem;color:#fff;line-height:1}
 .profile-btn.is-in .pf-initial{display:block}
 .profile-menu{position:absolute;right:0;top:calc(100% + 9px);background:var(--paper);border:1.5px solid var(--line);border-radius:13px;box-shadow:0 18px 40px -18px rgba(38,50,60,.55);width:225px;max-width:calc(100vw - 24px);display:none;overflow:hidden;z-index:70}
 .profile-menu.open{display:block;animation:pop .16s ease}
 .profile-head{padding:12px 15px;border-bottom:1px solid var(--line)}
-.profile-head b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.92rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile-head b{display:block;font-family:var(--font-ui);font-weight:700;font-size:.92rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .profile-head span{display:block;font-size:.78rem;color:#5d5949;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.profile-item{width:100%;text-align:left;padding:12px 15px;background:none;border:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;transition:.13s}
+.profile-item{width:100%;text-align:left;padding:12px 15px;background:none;border:none;font-family:var(--font-ui);font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;transition:.13s}
 .profile-item:hover{background:var(--kraft)}
 .fixpage-actions{display:flex;align-items:center;gap:10px}
 
@@ -158,7 +162,7 @@ a.btn{text-decoration:none}
 .lmarquee{overflow:hidden;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line);background:rgba(252,250,243,.5);padding:15px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
 .lmarquee-track{display:flex;align-items:center;gap:26px;width:max-content;animation:marq 38s linear infinite}
 .lmarquee:hover .lmarquee-track{animation-play-state:paused}
-.lmarquee b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);opacity:.62;white-space:nowrap}
+.lmarquee b{font-family:var(--font-ui);font-weight:800;font-size:.95rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);opacity:.62;white-space:nowrap}
 .lmarquee i{color:var(--orange);font-style:normal;font-size:.8rem}
 @keyframes marq{to{transform:translateX(-50%)}}
 
@@ -193,18 +197,18 @@ a.btn{text-decoration:none}
 /* sections */
 .lsec{max-width:1120px;margin:0 auto;padding:74px 22px;scroll-margin-top:80px}
 .lsec-head{text-align:center;max-width:780px;margin:0 auto 46px}
-.leyebrow{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:#A8551A}
-.lsec-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.85rem,3.7vw,2.7rem);letter-spacing:-.02em;line-height:1.1;margin-top:10px}
+.leyebrow{font-family:var(--font-ui);font-weight:800;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:#A8551A}
+.lsec-head h2{font-family:var(--font-ui);font-weight:800;font-size:clamp(1.85rem,3.7vw,2.7rem);letter-spacing:-.02em;line-height:1.1;margin-top:10px}
 .lsec-head .lede{color:#5d5949;font-size:1.06rem;line-height:1.68;margin-top:15px}
 
 /* how-it-works steps */
 .lsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .step-card{background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:28px 24px;box-shadow:0 16px 32px -28px var(--shadow-color);transition:transform .2s,box-shadow .2s}
 .step-card:hover{transform:translateY(-4px);box-shadow:0 24px 44px -28px var(--shadow-color)}
-.step-card .num{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:var(--navy);display:inline-flex;padding:5px 13px;border-radius:999px}
+.step-card .num{font-family:var(--font-ui);font-weight:800;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:var(--navy);display:inline-flex;padding:5px 13px;border-radius:999px}
 .step-card:nth-child(2) .num{background:var(--orange)}
 .step-card:nth-child(3) .num{background:var(--green)}
-.step-card h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.28rem;letter-spacing:-.01em;margin-top:17px}
+.step-card h3{font-family:var(--font-ui);font-weight:800;font-size:1.28rem;letter-spacing:-.01em;margin-top:17px}
 .step-card p{color:#5d5949;font-size:.96rem;line-height:1.62;margin-top:8px}
 @media(max-width:820px){.lsteps{grid-template-columns:1fr}}
 
@@ -214,14 +218,14 @@ a.btn{text-decoration:none}
 .fixtile:hover{transform:translateY(-3px);border-color:var(--tile,var(--orange));box-shadow:0 18px 34px -26px var(--shadow-color)}
 .fixtile .fic{width:54px;height:54px;margin:0 auto 13px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:var(--tint,var(--orange-soft))}
 .fixtile .fic svg{width:28px;height:28px;color:var(--tile,var(--orange));stroke-width:1.8}
-.fixtile b{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.01rem;display:block;letter-spacing:-.01em}
+.fixtile b{font-family:var(--font-ui);font-weight:700;font-size:1.01rem;display:block;letter-spacing:-.01em}
 .fixtile span{display:block;font-size:.8rem;color:#5d5949;margin-top:4px;line-height:1.4}
 @media(max-width:860px){.fixwrap{grid-template-columns:repeat(2,1fr)}}
 
 /* statement strip */
 .lstrip{background:var(--green-deep);color:#FCFAF3;padding:66px 22px;text-align:center;position:relative;overflow:hidden}
 .lstrip::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(252,250,243,.07) 1.4px,transparent 1.4px);background-size:22px 22px}
-.lstrip .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.7rem,4.2vw,2.8rem);letter-spacing:-.02em;line-height:1.16;position:relative}
+.lstrip .big{font-family:var(--font-ui);font-weight:800;font-size:clamp(1.7rem,4.2vw,2.8rem);letter-spacing:-.02em;line-height:1.16;position:relative}
 .lstrip .big em{font-style:normal;color:#EFD9A6}
 .lstrip p{position:relative;color:#DEEBDF;margin:13px auto 0;font-size:1.03rem;max-width:52ch}
 
@@ -229,8 +233,8 @@ a.btn{text-decoration:none}
 .lcta{max-width:1120px;margin:0 auto;padding:84px 22px;scroll-margin-top:80px}
 .lcta-card{background:var(--paper);border:1.5px solid var(--line);border-radius:26px;padding:clamp(38px,6vw,66px) clamp(22px,5vw,60px);text-align:center;box-shadow:0 34px 64px -44px rgba(38,50,60,.6);position:relative;overflow:hidden}
 .lcta-card::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--navy),var(--blue) 28%,var(--green) 52%,var(--amber) 74%,var(--orange))}
-.lcta-card h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.95rem,4.6vw,3.1rem);letter-spacing:-.02em;line-height:1.06}
-.lcta-sub{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(1.1rem,2vw,1.35rem);color:#A8551A;margin-top:8px}
+.lcta-card h2{font-family:var(--font-ui);font-weight:800;font-size:clamp(1.95rem,4.6vw,3.1rem);letter-spacing:-.02em;line-height:1.06}
+.lcta-sub{font-family:var(--font-ui);font-weight:700;font-size:clamp(1.1rem,2vw,1.35rem);color:#A8551A;margin-top:8px}
 .lcta-card>p{color:#5d5949;font-size:1.04rem;line-height:1.68;max-width:56ch;margin:18px auto 0}
 .lcta-card .btn{margin-top:28px}
 .lcta-note{margin-top:15px;font-size:.85rem;color:#5d5949;font-weight:600}
@@ -239,11 +243,11 @@ a.btn{text-decoration:none}
 .lfaq{max-width:740px;margin:0 auto}
 .faq-item{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color .18s}
 .faq-item[open]{border-color:#cdbf9f}
-.faq-item summary{list-style:none;cursor:pointer;padding:17px 20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.02rem}
+.faq-item summary{list-style:none;cursor:pointer;padding:17px 20px;font-family:var(--font-ui);font-weight:700;font-size:1.02rem}
 .faq-item summary::-webkit-details-marker{display:none}
 /* flex lives on an inner span: Safari <17.4 ignores display on <summary> itself */
 .faq-item .fsum{display:flex;justify-content:space-between;align-items:center;gap:14px}
-.faq-item summary .pm{flex:none;width:27px;height:27px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--orange-2);font-weight:800;font-family:'Hanken Grotesk',sans-serif;transition:transform .2s,background .2s,border-color .2s}
+.faq-item summary .pm{flex:none;width:27px;height:27px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--orange-2);font-weight:800;font-family:var(--font-ui);transition:transform .2s,background .2s,border-color .2s}
 .faq-item[open] summary .pm{transform:rotate(45deg);background:var(--orange-soft);border-color:var(--orange)}
 .faq-item .fa{padding:0 20px 18px;color:#5d5949;font-size:.95rem;line-height:1.66}
 
@@ -252,7 +256,7 @@ a.btn{text-decoration:none}
 .lfoot-in{max-width:1120px;margin:0 auto;padding:32px 22px 26px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .lfoot-brand{display:flex;align-items:center;gap:11px}
 .lfoot-brand img{width:36px;height:36px;border-radius:50%}
-.lfoot-brand b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;display:block;line-height:1.2}
+.lfoot-brand b{font-family:var(--font-ui);font-weight:800;display:block;line-height:1.2}
 .lfoot-brand small{display:block;color:#5d5949;font-size:.78rem}
 .lfoot-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .lfoot-links a,.lfoot-links button{color:#5d5949;font-size:.89rem;font-weight:600;text-decoration:none;padding:7px 11px;border-radius:8px;transition:.15s;background:none;border:none;cursor:pointer;font-family:inherit}
@@ -277,10 +281,10 @@ a.btn{text-decoration:none}
 .fixpage-top{display:flex;align-items:center;justify-content:space-between;height:64px}
 .fixpage-brand{display:flex;align-items:center;gap:10px}
 .fixpage-brand img{width:34px;height:34px;border-radius:50%}
-.fixpage-brand b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.fixpage-brand b{font-family:var(--font-ui);font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
 .fixpage-top .btn{padding:9px 16px;font-size:.92rem}
 .fixpage-head{text-align:center;margin:16px 0 22px}
-.fixpage-head h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:-.02em;line-height:1.1}
+.fixpage-head h2{font-family:var(--font-ui);font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:-.02em;line-height:1.1}
 .fixpage-head p{color:#5d5949;margin:9px auto 0;font-size:.98rem;line-height:1.6;max-width:46ch}
 .modal.fixpage-card{max-width:none;max-height:none;overflow:visible;animation:none}
 
@@ -316,10 +320,10 @@ a.btn{text-decoration:none}
 }
 .auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .auth-logo svg{width:44px;height:44px;flex:none}
-.auth-logo .name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.7rem;letter-spacing:-.02em;color:var(--ink)}
+.auth-logo .name{font-family:var(--font-ui);font-weight:800;font-size:1.7rem;letter-spacing:-.02em;color:var(--ink)}
 .auth-tagline{color:var(--muted);font-size:.92rem;margin-bottom:28px}
 .auth-tabs{display:flex;gap:0;margin-bottom:22px;background:var(--kraft);border-radius:11px;padding:4px}
-.auth-tabs button{flex:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.96rem;border:none;background:none;cursor:pointer;padding:10px;border-radius:9px;color:var(--muted);transition:.15s}
+.auth-tabs button{flex:1;font-family:var(--font-ui);font-weight:700;font-size:.96rem;border:none;background:none;cursor:pointer;padding:10px;border-radius:9px;color:var(--muted);transition:.15s}
 .auth-tabs button.on{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px -4px rgba(38,50,60,.25)}
 .afield{margin-bottom:14px}
 .afield label{display:block;font-weight:600;font-size:.85rem;margin-bottom:6px;color:var(--ink)}
@@ -327,11 +331,11 @@ a.btn{text-decoration:none}
 .afield input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(224,125,43,.16)}
 .pwwrap{position:relative}
 .pwwrap input{padding-right:64px}
-.pweye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.78rem;color:var(--navy);padding:6px 9px;border-radius:7px;transition:.14s}
+.pweye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-family:var(--font-ui);font-weight:700;font-size:.78rem;color:var(--navy);padding:6px 9px;border-radius:7px;transition:.14s}
 .pweye:hover{background:var(--navy-soft)}
 .google-btn{
   width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
-  font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;
+  font-family:var(--font-ui);font-weight:700;font-size:1rem;
   padding:12px;border-radius:11px;border:1.5px solid var(--line);background:#fff;
   cursor:pointer;transition:.15s;color:var(--ink);margin-bottom:12px;
 }
@@ -339,7 +343,7 @@ a.btn{text-decoration:none}
 .google-btn svg{width:20px;height:20px;flex:none}
 .or-div{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--muted);font-size:.82rem}
 .or-div::before,.or-div::after{content:"";flex:1;height:1px;background:var(--line)}
-.auth-btn{width:100%;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;padding:13px;border:none;border-radius:11px;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 8px 20px -8px rgba(30,58,82,.65);transition:.15s;margin-top:4px}
+.auth-btn{width:100%;font-family:var(--font-ui);font-weight:700;font-size:1rem;padding:13px;border:none;border-radius:11px;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 8px 20px -8px rgba(30,58,82,.65);transition:.15s;margin-top:4px}
 .auth-btn:hover{background:var(--navy-2)}
 .auth-err{color:#b23a26;font-size:.85rem;margin-top:10px;min-height:1.2em;text-align:center}
 .auth-switch{text-align:center;margin-top:16px;font-size:.88rem;color:var(--muted)}
@@ -364,28 +368,28 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px
 .head-in{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 18px;gap:10px}
 .brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
 .brand svg{width:36px;height:36px;flex:none}
-.brand b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--ink)}
+.brand b{font-family:var(--font-ui);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--ink)}
 .brand small{display:block;font-size:.6rem;color:#A8551A;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-top:1px}
 .brand b{display:block;line-height:1.05}
 .head-right{display:flex;align-items:center;gap:10px}
 nav.main{display:flex;gap:2px}
-nav.main button{position:relative;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:.9rem;color:var(--ink);background:none;border:none;cursor:pointer;padding:7px 11px;border-radius:9px;transition:.15s;opacity:.72}
+nav.main button{position:relative;font-family:var(--font-ui);font-weight:600;font-size:.9rem;color:var(--ink);background:none;border:none;cursor:pointer;padding:7px 11px;border-radius:9px;transition:.15s;opacity:.72}
 nav.main button.has-unread{opacity:1}
-nav.main button .nav-badge{position:absolute;top:-2px;right:-2px;background:var(--orange);color:#fff;font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:.66rem;min-width:18px;height:18px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--paper);line-height:1}
+nav.main button .nav-badge{position:absolute;top:-2px;right:-2px;background:var(--orange);color:#fff;font-family:var(--font-ui);font-weight:700;font-size:.66rem;min-width:18px;height:18px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--paper);line-height:1}
 nav.main button:hover{opacity:1;background:rgba(38,50,60,.07)}
 nav.main button.on{opacity:1;color:var(--kraft);background:var(--ink)}
 .user-wrap{position:relative}
 .user-chip{display:flex;align-items:center;gap:7px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:4px 11px 4px 5px;cursor:pointer;font-family:inherit;transition:.15s}
 .user-chip:hover{border-color:#c0b8a8}
-.user-chip .av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.76rem;color:#fff;flex:none}
+.user-chip .av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:800;font-size:.76rem;color:#fff;flex:none}
 .user-chip .un{font-size:.82rem;font-weight:700;color:var(--ink);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .user-chip .chev{color:var(--ink);opacity:.55;font-size:.62rem}
 .user-menu{position:absolute;right:0;top:calc(100% + 9px);background:var(--paper);border:1.5px solid var(--line);border-radius:13px;box-shadow:0 18px 40px -18px rgba(38,50,60,.55);width:230px;max-width:calc(100vw - 24px);display:none;overflow:hidden;z-index:60}
 .user-menu.open{display:block;animation:pop .16s ease}
 .um-head{display:flex;flex-direction:column;gap:2px;padding:12px 15px;border-bottom:1px solid var(--line)}
-.um-head b{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.94rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.um-head b{font-family:var(--font-ui);font-weight:700;font-size:.94rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .um-head span{font-size:.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.um-item{width:100%;text-align:left;padding:12px 15px;background:none;border:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;transition:.13s}
+.um-item{width:100%;text-align:left;padding:12px 15px;background:none;border:none;font-family:var(--font-ui);font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;transition:.13s}
 .um-item:hover{background:var(--kraft)}
 
 /* ===== MAIN ===== */
@@ -397,7 +401,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .hero h1{font-weight:800;font-size:clamp(2.1rem,5.5vw,3rem);letter-spacing:-.025em;line-height:1.04;max-width:17ch}
 .hero p{color:#5d5949;font-size:1.05rem;line-height:1.6;margin-top:10px;max-width:56ch}
 .hero-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px}
-.btn{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;border:none;padding:12px 22px;border-radius:11px;transition:.16s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn{font-family:var(--font-ui);font-weight:700;font-size:1rem;cursor:pointer;border:none;padding:12px 22px;border-radius:11px;transition:.16s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .btn-primary{background:var(--navy);color:#fff;box-shadow:0 9px 20px -8px rgba(30,58,82,.65)}
 .btn-primary:hover{background:var(--navy-2);transform:translateY(-1px)}
 .btn-orange{background:var(--orange);color:#fff}.btn-orange:hover{background:var(--orange-2)}
@@ -407,14 +411,14 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 
 .impact{display:flex;gap:10px;margin:22px 0;flex-wrap:wrap}
 .istat{flex:1;min-width:110px;background:var(--paper);border:1.5px solid var(--line);border-radius:13px;padding:14px 16px}
-.istat .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.8rem;line-height:1}
+.istat .n{font-family:var(--font-ui);font-weight:800;font-size:1.8rem;line-height:1}
 .istat .l{font-size:.77rem;color:#5d5949;font-weight:600;margin-top:4px}
 .istat.amber .n{color:var(--amber)}.istat.blue .n{color:var(--blue)}.istat.green .n{color:var(--green)}
 .istat.hero{display:flex;align-items:center;gap:16px;padding:18px 22px;background:linear-gradient(135deg,var(--green-soft),var(--paper));border-color:#c6dbc7}
 .istat.hero .n{font-size:2.6rem;color:var(--green-deep)}
 .istat.hero .l{font-size:.92rem;color:var(--green-deep);font-weight:700;margin-top:6px;letter-spacing:.01em}
 .istat.hero .ico{font-size:2.2rem}
-.board-label{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.85rem;color:#A8551A;letter-spacing:.1em;text-transform:uppercase}
+.board-label{font-family:var(--font-ui);font-weight:800;font-size:.85rem;color:#A8551A;letter-spacing:.1em;text-transform:uppercase}
 
 .filterbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
@@ -439,7 +443,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .timeline-box{background:var(--blue-soft);border-radius:9px;padding:8px 11px;font-size:.82rem}.timeline-box b{color:#1f5179}
 .ready-box{background:var(--green-soft);border-radius:9px;padding:8px 11px;font-size:.82rem;color:#316b3d;font-weight:600}
 .act{display:flex;gap:7px;flex-wrap:wrap}
-.act button{flex:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;border:none;padding:9px;border-radius:9px;transition:.15s}
+.act button{flex:1;font-family:var(--font-ui);font-weight:600;font-size:.84rem;cursor:pointer;border:none;padding:9px;border-radius:9px;transition:.15s}
 .act .claim{background:var(--orange);color:#fff}.act .claim:hover{background:var(--orange-2)}
 .act .markready{background:var(--green);color:#fff}.act .markready:hover{background:#3f7a4b}
 .act .chatbtn{background:var(--navy);color:#fff}.act .chatbtn:hover{background:var(--navy-2)}
@@ -458,7 +462,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .fcard:hover{transform:translateY(-3px)}
 .fcard .pic{width:92px;height:92px;border-radius:50%;margin:0 auto 13px;overflow:hidden;border:3px solid var(--paper);box-shadow:0 0 0 3px var(--orange-soft)}
 .fcard .pic img{width:100%;height:100%;object-fit:cover}
-.avi{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:2rem}
+.avi{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-ui);font-weight:800;font-size:2rem}
 .fcard h3{font-size:1.2rem;font-weight:700}
 .fspec{display:inline-block;font-size:.73rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#A8551A;background:var(--orange-soft);padding:4px 11px;border-radius:999px;margin:6px 0 10px}
 .fbio{font-size:.9rem;color:#4a4f52;text-align:left}
@@ -476,7 +480,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .mi-stat.awaiting{color:var(--amber)}.mi-stat.progress{color:var(--blue)}.mi-stat.ready{color:var(--green)}
 .mi-timeline{font-size:.84rem;color:var(--muted);margin-top:3px}
 .mi-actions{padding:12px 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
-.mi-markready,.mi-reopen,.mi-verify{width:100%;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.93rem;padding:10px;border-radius:9px;cursor:pointer;transition:.14s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mi-markready,.mi-reopen,.mi-verify{width:100%;font-family:var(--font-ui);font-weight:700;font-size:.93rem;padding:10px;border-radius:9px;cursor:pointer;transition:.14s;display:flex;align-items:center;justify-content:center;gap:6px}
 .mi-markready{background:var(--green);color:#fff;border:none;box-shadow:0 6px 14px -8px rgba(78,141,91,.6)}
 .mi-markready:hover{background:#3f7a4b;transform:translateY(-1px)}
 .mi-verify{background:var(--orange);color:#fff;border:none;box-shadow:0 6px 14px -8px rgba(224,125,43,.55)}
@@ -484,14 +488,14 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .mi-reopen{background:var(--kraft);color:var(--ink);border:1.5px solid var(--line)}
 .mi-reopen:hover{border-color:var(--navy);color:var(--navy)}
 .mi-pending{background:var(--amber-soft);color:#8a6a17;border-radius:9px;padding:10px 12px;font-size:.88rem;font-weight:600;text-align:center}
-.mi-done{background:var(--green-soft);color:var(--green-deep);border-radius:9px;padding:12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.95rem;text-align:center}
+.mi-done{background:var(--green-soft);color:var(--green-deep);border-radius:9px;padding:12px;font-family:var(--font-ui);font-weight:700;font-size:.95rem;text-align:center}
 .mi-stat.verified{color:var(--green-deep)}
-.chat-toggle{display:flex;align-items:center;gap:8px;padding:11px 16px;background:none;border:none;width:100%;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;border-top:1px solid var(--line);transition:.14s}
+.chat-toggle{display:flex;align-items:center;gap:8px;padding:11px 16px;background:none;border:none;width:100%;font-family:var(--font-ui);font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;border-top:1px solid var(--line);transition:.14s}
 .chat-toggle:hover{background:var(--blue-soft)}
 .chat-toggle .arr{margin-left:auto;transition:transform .2s}
 .chat-toggle.open .arr{transform:rotate(180deg)}
 .chat-toggle.has-new{background:linear-gradient(90deg,var(--orange-soft),transparent);color:var(--orange-2)}
-.chat-badge{background:var(--orange);color:#fff;font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:.7rem;padding:2px 9px;border-radius:999px;margin-left:6px;letter-spacing:.02em}
+.chat-badge{background:var(--orange);color:#fff;font-family:var(--font-ui);font-weight:700;font-size:.7rem;padding:2px 9px;border-radius:999px;margin-left:6px;letter-spacing:.02em}
 .chat-body-wrap{display:none;border-top:1px solid var(--line)}
 .chat-body-wrap.open{display:block}
 
@@ -506,7 +510,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--paper)}
 .chat-input-row input{flex:1;font-family:inherit;font-size:.93rem;padding:9px 12px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
 .chat-input-row input:focus{outline:none;border-color:var(--navy)}
-.chat-input-row button{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.88rem;background:var(--navy);color:#fff;border:none;border-radius:9px;padding:0 16px;cursor:pointer;transition:.14s}
+.chat-input-row button{font-family:var(--font-ui);font-weight:700;font-size:.88rem;background:var(--navy);color:#fff;border:none;border-radius:9px;padding:0 16px;cursor:pointer;transition:.14s}
 .chat-input-row button:hover{background:var(--navy-2)}
 .no-items{text-align:center;padding:48px 20px;color:var(--muted);background:var(--paper);border:2px dashed var(--line);border-radius:var(--r);margin-top:18px}
 .no-items .big{font-size:2.2rem;margin-bottom:8px}
@@ -535,14 +539,14 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .ai-banner{background:linear-gradient(135deg,var(--orange-soft),var(--green-soft));border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:.88rem;color:#3f4a32;border:1px solid #d8e2c2}
 .qbox{background:var(--kraft);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:11px}
 .qbox .qt{font-weight:700;font-size:.93rem;margin-bottom:8px;color:var(--ink)}
-.qbox .qnum{color:var(--orange-2);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;margin-right:5px}
+.qbox .qnum{color:var(--orange-2);font-family:var(--font-ui);font-weight:800;margin-right:5px}
 .qopts{display:flex;flex-wrap:wrap;gap:6px}
 .qopts button{font-family:inherit;font-size:.84rem;font-weight:600;cursor:pointer;padding:7px 13px;border-radius:9px;border:1.5px solid var(--line);background:#fff;color:#444c52;transition:.14s}
 .qopts button:hover{border-color:var(--orange)}.qopts button.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
 .ai-loading{text-align:center;padding:28px 18px}
 .ai-loading .sp{display:inline-block;width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ai-loading b{display:block;margin-top:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700}
+.ai-loading b{display:block;margin-top:10px;font-family:var(--font-ui);font-weight:700}
 .ai-loading span{color:var(--muted);font-size:.88rem}
 
 /* success code */
@@ -552,7 +556,7 @@ main{padding:28px 0 80px;position:relative;z-index:1}
 .success-screen p{color:var(--muted);font-size:.92rem;margin-bottom:16px}
 .code-display{background:var(--kraft);border:2px dashed var(--orange);border-radius:13px;padding:16px;margin:0 0 14px}
 .code-display .clabel{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:5px}
-.code-display .cval{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:2rem;letter-spacing:.22em;color:var(--ink)}
+.code-display .cval{font-family:var(--font-ui);font-weight:800;font-size:2rem;letter-spacing:.22em;color:var(--ink)}
 .code-display .copy{font-family:inherit;font-size:.82rem;font-weight:700;background:none;border:none;cursor:pointer;color:var(--navy);margin-top:7px}
 
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(150%);visibility:hidden;background:var(--ink);color:var(--kraft);padding:12px 22px;border-radius:12px;font-weight:600;font-size:.9rem;z-index:210;transition:transform .35s cubic-bezier(.2,.9,.3,1.2),visibility .35s;box-shadow:var(--shadow)}
@@ -577,7 +581,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 .auth-logo-fallback{width:44px;height:44px;flex:none}
 
 /* ===== ADMIN "VIEW AS USER" SWITCH ===== */
-.va-switch{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1.5px solid var(--line);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.78rem;padding:6px 11px;border-radius:999px;cursor:pointer;transition:.15s}
+.va-switch{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1.5px solid var(--line);color:var(--ink);font-family:var(--font-ui);font-weight:700;font-size:.78rem;padding:6px 11px;border-radius:999px;cursor:pointer;transition:.15s}
 .va-switch:hover{border-color:#c0b8a8}
 .va-switch .va-dot{width:9px;height:9px;border-radius:50%;background:#9aa6ad;transition:.15s;flex:none}
 .va-switch.on .va-dot{background:#6BBE85;box-shadow:0 0 0 3px rgba(107,190,133,.3)}
@@ -588,7 +592,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 .admin-cat{font-size:.74rem;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
 .admin-cat select{flex:1;font-family:inherit;font-size:.82rem;padding:6px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
 .admin-btns{display:flex;gap:7px}
-.admin-btns button{flex:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;border:none;padding:8px;border-radius:8px;transition:.14s}
+.admin-btns button{flex:1;font-family:var(--font-ui);font-weight:700;font-size:.8rem;cursor:pointer;border:none;padding:8px;border-radius:8px;transition:.14s}
 .admin-delist{background:var(--amber-soft);color:#8a6a17}.admin-delist:hover{background:#f0dba8}
 .admin-del{background:#f7d9d2;color:#b23a26}.admin-del:hover{background:#f0c4ba}
 .delisted-pill{display:inline-block;margin-left:7px;font-size:.6rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#b23a26;background:#f7d9d2;padding:2px 7px;border-radius:999px;vertical-align:middle}
@@ -596,6 +600,116 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 
 /* ===== AUTO-CATEGORY DISPLAY (submit modal) ===== */
 .cat-display{font-family:inherit;font-size:.95rem;color:var(--ink);padding:11px 13px;border:1.5px solid var(--line);border-radius:11px;background:var(--kraft);font-weight:600}
+/* =========================================================
+   REFINEMENT LAYER
+   Editorial serif for display type, one accent colour, no
+   decorative texture, tighter radii and quieter shadows.
+   ========================================================= */
+
+/* ---- type ---- */
+body{font-family:var(--font-ui);letter-spacing:-.004em}
+h1,h2,h3,.lhero h1,.lsec-head h2,.lcta-card h2,.lband h2,.page-head h2,.fixpage-head h2,.card h3,.mi-card h3,.fcard h3,.step-card h3,.modal h3,.success-screen h3{
+  font-family:var(--font-display);font-optical-sizing:auto;font-weight:600;letter-spacing:-.018em}
+.lhero h1{font-weight:600;letter-spacing:-.028em;line-height:1.05;font-size:clamp(2.5rem,6.4vw,4.5rem)}
+.lsec-head h2,.lcta-card h2,.lband h2{letter-spacing:-.022em;line-height:1.12}
+.lhero-sub,.lsec-head .lede,.lcta-card>p,.lband p{font-size:1.04rem;line-height:1.72;color:var(--muted)}
+.leyebrow{font-family:var(--font-ui);font-weight:600;font-size:.72rem;letter-spacing:.17em;color:var(--orange)}
+.btn{font-family:var(--font-ui);font-weight:600;letter-spacing:0;border-radius:9px}
+.btn.btn-lg{border-radius:10px;font-size:1.02rem;padding:14px 26px}
+.faq-item summary,.chat-toggle,.um-item,.profile-item,nav.main button,.lnav-links a,.lnav-brand b,.fixpage-brand b{font-family:var(--font-ui);font-weight:500}
+.lnav-brand b,.fixpage-brand b,.brand b{font-family:var(--font-display);font-weight:600;letter-spacing:-.02em}
+.faq-item summary{font-weight:600;font-size:1rem}
+
+/* ---- surfaces: drop the dot grid and the tinted blooms ---- */
+body{background-image:none;background-color:var(--kraft)}
+#auth-screen{background-image:none;background:var(--kraft)}
+#submitOverlay,#myItemsPage,#app{background-image:none;background:var(--kraft)}
+.lhero-tools,.tooldeco{display:none}
+.lstrip::before{display:none}
+
+/* ---- borders, radii, shadows ---- */
+.card,.fcard,.mi-card,.step-card,.fixtile,.faq-item,.lshot,.auth-card,.modal,.istat,.no-items,.empty{
+  border-width:1px;border-color:var(--line);box-shadow:none}
+.card,.mi-card,.step-card,.fixtile,.faq-item,.lshot{border-radius:12px}
+.auth-card,.modal,.lcta-card{border-radius:16px}
+.card:hover,.fcard:hover,.step-card:hover,.fixtile:hover{transform:translateY(-2px);border-color:#D8D2C4;box-shadow:0 6px 18px -10px rgba(28,33,32,.18)}
+.lcta-card{box-shadow:0 8px 30px -22px rgba(28,33,32,.4)}
+.lcta-card::before{height:3px;background:var(--orange)}
+.modal{border-top:1px solid var(--line)}
+header::after{display:none}
+header{border-bottom:1px solid var(--line)}
+.scrollbar{height:2px;background:var(--orange)}
+.ruler{display:none}
+
+/* ---- buttons ---- */
+.btn-orange{background:var(--orange);color:#fff;box-shadow:none}
+.btn-orange:hover{background:var(--orange-2);transform:translateY(-1px);box-shadow:0 8px 18px -10px rgba(180,85,30,.55)}
+.btn-primary{background:var(--ink);color:#fff;box-shadow:none}
+.btn-primary:hover{background:var(--navy-2);transform:translateY(-1px)}
+.btn-ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:#C9C2B2;background:var(--paper)}
+
+/* ---- landing detail ---- */
+.lnav{background:rgba(247,244,238,.88);border-bottom:1px solid transparent}
+.lnav.scrolled{border-bottom-color:var(--line);box-shadow:none}
+.lnav-links a{opacity:.66;font-size:.92rem}
+.lnav-links a:hover{opacity:1;background:none}
+.lhero-badge{background:var(--paper);border:1px solid var(--line);box-shadow:none;font-family:var(--font-ui);font-weight:500;font-size:.84rem;color:var(--muted)}
+.lhero{padding-top:104px;padding-bottom:92px}
+.swash svg{height:.22em}
+.swash svg path{stroke-width:6}
+.lmarquee{background:transparent;border-color:var(--line);padding:17px 0}
+.lmarquee b{font-size:.78rem;letter-spacing:.19em;font-weight:600;opacity:.5}
+.lmarquee i{font-size:.55rem;opacity:.6}
+.lmarquee-track{gap:30px}
+.lsec{padding:92px 22px}
+.lsec-head{margin-bottom:52px}
+.step-card{padding:30px 26px}
+.step-card .num{background:none;color:var(--muted);padding:0;font-size:.72rem;letter-spacing:.17em;font-weight:600;border-radius:0}
+.step-card:nth-child(2) .num,.step-card:nth-child(3) .num{background:none;color:var(--muted)}
+.step-card h3{font-size:1.3rem;margin-top:14px}
+.step-card:hover .num{transform:none}
+.fixtile .fic{background:var(--kraft);border-radius:10px}
+.fixtile:hover .fic{transform:none}
+.fixtile .fic svg{color:var(--muted);stroke-width:1.6}
+.fixtile:hover .fic svg{color:var(--orange)}
+.fixtile b{font-family:var(--font-ui);font-weight:600;font-size:.98rem}
+.lstrip{background:var(--green-deep);padding:88px 22px}
+.lstrip .big{font-family:var(--font-display);font-weight:600;letter-spacing:-.02em}
+.lstrip .big em{color:#D8C79C}
+.lband{padding:clamp(104px,16vw,180px) 22px}
+.lband::before{background:linear-gradient(rgba(20,26,24,.62),rgba(20,26,24,.74))}
+.lshot{padding:8px 8px 10px;border-radius:10px}
+.lshot:nth-child(odd),.lshot:nth-child(even){transform:none}
+.lshot:hover{transform:translateY(-3px)}
+.lshot figcaption{font-family:var(--font-ui);font-weight:500;font-size:.79rem;color:var(--muted)}
+.faq-item summary{padding:18px 20px}
+.faq-item[open]{border-color:#D8D2C4}
+.faq-item summary .pm{border-color:var(--line);color:var(--orange);width:24px;height:24px;font-weight:500}
+.faq-item[open] summary .pm{background:var(--orange-soft);border-color:var(--orange-soft)}
+.lfoot{background:transparent;border-top:1px solid var(--line)}
+.lcta{padding:96px 22px}
+
+/* ---- app detail ---- */
+.photo{background:var(--kraft);border-bottom:1px solid var(--line)}
+.photo .ph-ico{width:34px;height:34px;color:#B9B2A2}
+.note{background:var(--kraft);border:none;border-left:2px solid var(--green);border-radius:0 8px 8px 0;color:#40453f}
+.note .nlabel{color:var(--green-deep);letter-spacing:.12em}
+.tag{border-radius:4px;font-weight:600;letter-spacing:.06em;box-shadow:none;padding:4px 9px 4px 15px}
+.catpill{font-family:var(--font-ui);letter-spacing:.13em;font-weight:600;font-size:.68rem}
+.istat.hero{background:var(--paper);border-color:var(--line)}
+.istat.hero .n{font-family:var(--font-display);font-weight:600}
+.board-label{letter-spacing:.16em;font-size:.72rem}
+.fspec{font-family:var(--font-ui);letter-spacing:.12em;font-size:.68rem;background:var(--kraft);color:var(--muted)}
+.fcard .pic{box-shadow:0 0 0 1px var(--line)}
+.locked,.empty,.no-items{border-radius:8px}
+.empty,.no-items{border:1px solid var(--line);background:var(--paper)}
+.photo-pick{border:1px dashed var(--line);border-radius:9px}
+.field input,.field textarea,.field select,.afield input{border-width:1px;border-radius:9px}
+.field input:focus,.field textarea:focus,.afield input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(180,85,30,.12)}
+.code-display{border-style:solid;border-width:1px}
+.success-screen .check{background:var(--green-deep);box-shadow:none}
+.toast{border-radius:9px}
 </style>
 </head>
 <body>
@@ -770,7 +884,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
         <button type="button" onclick="openMyItems()">My items</button>
       </nav>
     </div>
-    <div class="lfoot-eco">♻️ Every repair keeps one more thing out of the landfill. Donations always welcome.</div>
+    <div class="lfoot-eco">Every repair keeps one more thing out of the landfill. Donations always welcome.</div>
   </footer>
 
   <!-- auth overlay (sign in / create account) -->
@@ -856,7 +970,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
         </button>
         <div class="user-menu" id="userMenu">
           <div class="um-head"><b id="umName">…</b><span id="umEmail"></span></div>
-          <button class="um-item" onclick="signOut()">👋 Sign out</button>
+          <button class="um-item" onclick="signOut()">Sign out</button>
         </div>
       </div>
     </div>
@@ -873,7 +987,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
         <p>Open fix requests from customers. Claim one, send your bid, and chat with the owner until pickup.</p>
         <div class="ruler"></div>
         <div class="hero-row">
-          <button class="btn btn-orange" onclick="openSubmit()">＋ Start a fix request</button>
+          <button class="btn btn-orange" onclick="openSubmit()">Start a fix request</button>
           <span class="clubhint" id="modeHint"></span>
         </div>
       </div>
@@ -962,7 +1076,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
     <p class="msub">Name the item and add a photo, then describe the problem.</p>
     <div class="field"><label>What is it?</label><input id="s-name" placeholder="e.g. desk lamp, backpack, speaker"></div>
     <div class="field"><label>Photo <span class="opt">(optional, helps a lot)</span></label>
-      <label class="photo-pick"><input type="file" accept="image/*" id="s-photo">📷 Add a photo</label>
+      <label class="photo-pick"><input type="file" accept="image/*" id="s-photo">Add a photo</label>
       <div class="photo-preview" id="photoPreview"><img id="photoPreviewImg" alt=""></div>
     </div>
     <div class="err" id="s-err"></div>
@@ -1054,7 +1168,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
   <div class="field"><label>Email <span class="opt">(must match their sign-in email)</span></label><input id="f-email" type="email" placeholder="sam@example.com"></div>
   <div class="field"><label>Bio</label><textarea id="f-bio" placeholder="What they're good at fixing…"></textarea></div>
   <div class="field"><label>Photo <span class="opt">(optional)</span></label>
-    <label class="photo-pick"><input type="file" accept="image/*" id="f-photo">📷 Add photo</label>
+    <label class="photo-pick"><input type="file" accept="image/*" id="f-photo">Add photo</label>
     <div class="photo-preview" id="fPhotoPreview"><img id="fPhotoPreviewImg" alt=""></div>
   </div>
   <div class="err" id="f-err"></div>
@@ -1178,7 +1292,7 @@ function syncProfileMenus(){
       btn.style.background=inn?profileColor():'';
     }
     var act=document.getElementById('pf-action-'+k);
-    if(act)act.textContent=inn?'👋 Sign out':'Sign in';
+    if(act)act.textContent=inn?'Sign out':'Sign in';
     var head=document.getElementById('pf-head-'+k);
     if(head)head.style.display=inn?'block':'none';
     if(inn){
@@ -1324,7 +1438,7 @@ const googleProvider = new GoogleAuthProvider();
    CONSTANTS & STATE
    ========================================================= */
 const CATS=["Electronics","Clothing & textiles","Bags & zippers","Furniture","Bikes & wheels","Toys & games","Jewelry & accessories","Other"];
-const CAT_ICON={"Electronics":"🔌","Clothing & textiles":"👕","Bags & zippers":"🎒","Furniture":"🪑","Bikes & wheels":"🚲","Toys & games":"🧸","Jewelry & accessories":"💍","Other":"🔧"};
+const CAT_ICON={};  // category names carry themselves; no emoji in the UI
 const STATUS_LABEL={awaiting:"Awaiting fixer",progress:"In progress",ready:"Ready for pickup",verified:"Completed"};
 const AV_COLORS=["#1E3A52","#E07D2B","#2E6E9E","#4E8D5B","#CF9412","#5B5470"];
 const AV_PALETTE=["#E07D2B","#2E6E9E","#4E8D5B","#CF9412","#9B59B6","#1E3A52"];
@@ -2068,7 +2182,7 @@ function renderItems(){
   const fixedCount=items.filter(i=>i.status==='verified').length;
   document.getElementById('impact').innerHTML=`
     <div class="istat hero green">
-      <span class="ico">♻️</span>
+      
       <div>
         <div class="n">${fixedCount}</div>
         <div class="l">Fixed &amp; kept from landfill</div>
@@ -2089,39 +2203,39 @@ function renderItems(){
   list.sort((a,b)=>new Date(b.submittedAt)-new Date(a.submittedAt));
   const grid=document.getElementById('grid');
   if(!list.length){
-    grid.innerHTML=`<div class="empty"><div class="big">🛠️</div><b>No open requests right now.</b><br>${cat==='all'?'New fix requests will show up here.':'No items in this category. Try \"All categories\".'}</div>`;
+    grid.innerHTML=`<div class="empty"><div class="big">·</div><b>No open requests right now.</b><br>${cat==='all'?'New fix requests will show up here.':'No items in this category. Try \"All categories\".'}</div>`;
     return;
   }
   grid.innerHTML=list.map(itemCard).join('');
 }
 function itemCard(i){
-  const photo=i.photo?`<div class="photo"><img src="${i.photo}" alt=""/><span class="tag ${i.status}">${STATUS_LABEL[i.status]}</span></div>`:`<div class="photo">${CAT_ICON[i.cat]||'🔧'}<span class="tag ${i.status}">${STATUS_LABEL[i.status]}</span></div>`;
+  const photo=i.photo?`<div class="photo"><img src="${i.photo}" alt=""/><span class="tag ${i.status}">${STATUS_LABEL[i.status]}</span></div>`:`<div class="photo"><svg class="ph-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.6 4.8a3.9 3.9 0 0 0-5.2 5.2L4 15.4a2 2 0 1 0 2.8 2.8l5.4-5.4a3.9 3.9 0 0 0 5.2-5.2l-3 3-2.2-.6-.6-2.2z"></path></svg><span class="tag ${i.status}">${STATUS_LABEL[i.status]}</span></div>`;
   const isMyItem=currentUser&&(i.submitterId===currentUser.id);
   const isMyRepair=currentUser&&(i.fixerId===currentUser.id);
   let block='';
   if(i.status==='awaiting')block=clubMode?`<div class="act"><button class="claim" onclick="openClaim('${i.id}')">Claim repair</button></div>`:isMyItem?`<div class="locked">Waiting for a fixer to claim it</div>`:`<div class="locked">Waiting for a fixer</div>`;
   else if(i.status==='progress'){
-    block=`<div class="timeline-box">🛠️ <b>${esc(i.fixer)}</b> is on it${i.bid?` · bid <b>${esc(i.bid)}</b>`:''} · est. <b>${esc(i.timeline)}</b></div>`;
+    block=`<div class="timeline-box"><b>${esc(i.fixer)}</b> is on it${i.bid?` · bid <b>${esc(i.bid)}</b>`:''} · est. <b>${esc(i.timeline)}</b></div>`;
     // Only the submitter or the actual fixer should see Chat — they're the only ones who'll find this thread on their list page.
     const canChat=isMyItem||isMyRepair;
     const chatTarget=isMyItem?'myitems':'myrepairs';
     const acts=[];
     if(clubMode&&(isMyRepair||actingAsAdmin()))acts.push(`<button class="markready" onclick="markReady('${i.id}')">Mark ready</button>`);
-    if(canChat)acts.push(`<button class="chatbtn" onclick="gotoChat('${i.code}','${chatTarget}')">💬 Chat</button>`);
+    if(canChat)acts.push(`<button class="chatbtn" onclick="gotoChat('${i.code}','${chatTarget}')">Chat</button>`);
     if(acts.length)block+=`<div class="act">${acts.join('')}</div>`;
   }else{
-    block=`<div class="ready-box">✅ Fixed by ${esc(i.fixer)}, ready for pickup!</div>`;
+    block=`<div class="ready-box">Fixed by ${esc(i.fixer)}, ready for pickup</div>`;
     if(clubMode&&(isMyRepair||actingAsAdmin()))block+=`<div class="act"><button class="secondary" onclick="reopen('${i.id}')">Reopen</button></div>`;
   }
   const delistMark=i.delisted?`<span class="delisted-pill">Delisted</span>`:'';
-  return `<div class="card${i.delisted?' is-delisted':''}">${photo}<div class="body"><span class="catpill">${CAT_ICON[i.cat]||''} ${esc(i.cat)}${delistMark}</span><h3>${esc(i.name)}</h3><div class="note"><span class="nlabel">What's wrong</span>${esc(i.prob)}</div><div class="meta"><span>From ${esc(i.sub)} · ${ago(i.submittedAt)}</span></div>${block}${adminItemStrip(i)}</div></div>`;
+  return `<div class="card${i.delisted?' is-delisted':''}">${photo}<div class="body"><span class="catpill">${esc(i.cat)}${delistMark}</span><h3>${esc(i.name)}</h3><div class="note"><span class="nlabel">What's wrong</span>${esc(i.prob)}</div><div class="meta"><span>From ${esc(i.sub)} · ${ago(i.submittedAt)}</span></div>${block}${adminItemStrip(i)}</div></div>`;
 }
 // Admin-only control strip rendered on every board card (edit category, delist, delete).
 function adminItemStrip(i){
   if(!actingAsAdmin())return '';
   const opts=CATS.map(c=>`<option ${c===i.cat?'selected':''}>${esc(c)}</option>`).join('');
   return `<div class="admin-strip">
-    <div class="admin-strip-label">⚙️ Admin · ${STATUS_LABEL[i.status]||i.status}${i.delisted?' · delisted':''}</div>
+    <div class="admin-strip-label">Admin · ${STATUS_LABEL[i.status]||i.status}${i.delisted?' · delisted':''}</div>
     <label class="admin-cat">Category
       <select onchange="adminSetCategory('${i.id}',this.value)">${opts}</select>
     </label>
@@ -2140,8 +2254,8 @@ function renderMyItems(){
   const root=document.getElementById(pubMode?'pub-myitems-content':'myitems-content');
   if(!root)return;
   const emptyHtml= pubMode
-    ? `<div class="no-items"><div class="big">📦</div><b>Nothing here yet.</b><br><span>Send a fix request and it will show up here, chat included.</span><div style="margin-top:14px"><button class="btn btn-orange" onclick="closeMyItems();startFixRequest()">Start a fix request</button></div></div>`
-    : `<div class="no-items"><div class="big">📦</div><b>No items submitted yet.</b><br><span>Submit a broken item using the button on the Home page.</span></div>`;
+    ? `<div class="no-items"><div class="big">·</div><b>Nothing here yet.</b><br><span>Send a fix request and it will show up here, chat included.</span><div style="margin-top:14px"><button class="btn btn-orange" onclick="closeMyItems();startFixRequest()">Start a fix request</button></div></div>`
+    : `<div class="no-items"><div class="big">·</div><b>No items submitted yet.</b><br><span>Submit a broken item using the button on the Home page.</span></div>`;
   if(!currentUser){ root.innerHTML=emptyHtml; return; }
   if(!pubMode){
     const sub=document.getElementById('myItemsSub');
@@ -2172,7 +2286,7 @@ function renderMyRepairs(){
   document.getElementById('myRepairsSub').innerHTML=`Items you've claimed. Chat with the owners here. <b>${active}</b> in progress · <b>${pending}</b> awaiting confirmation · <b>${done}</b> completed.`;
   const root=document.getElementById('myrepairs-content');
   if(!myRepairs.length){
-    root.innerHTML=`<div class="no-items"><div class="big">🔧</div><b>No repairs claimed yet.</b><br><span>Head to the Home board and claim a repair.</span></div>`;
+    root.innerHTML=`<div class="no-items"><div class="big">·</div><b>No repairs claimed yet.</b><br><span>Head to the Home board and claim a repair.</span></div>`;
     return;
   }
   const draftInputs=snapshotChatInputs();
@@ -2198,28 +2312,28 @@ function miCard(i){
   const isMySubmitterCard=currentUser && i.submitterId===currentUser.id;
   let actionRow='';
   if(isMyFixerCard && i.status==='progress'){
-    actionRow=`<div class="mi-actions"><button class="mi-markready" onclick="markReady('${i.id}')">✓ Mark complete</button></div>`;
+    actionRow=`<div class="mi-actions"><button class="mi-markready" onclick="markReady('${i.id}')">Mark complete</button></div>`;
   } else if(isMyFixerCard && i.status==='ready'){
-    actionRow=`<div class="mi-actions"><div class="mi-pending">⏳ Waiting for ${esc(i.sub)} to confirm pickup</div><button class="mi-reopen" onclick="reopen('${i.id}')">↻ Reopen</button></div>`;
+    actionRow=`<div class="mi-actions"><div class="mi-pending">Waiting for ${esc(i.sub)} to confirm pickup</div><button class="mi-reopen" onclick="reopen('${i.id}')">Reopen</button></div>`;
   } else if(isMyFixerCard && i.status==='verified'){
-    actionRow=`<div class="mi-actions"><div class="mi-done">🎉 Repair completed and confirmed!</div></div>`;
+    actionRow=`<div class="mi-actions"><div class="mi-done">Repair completed and confirmed</div></div>`;
   } else if(isMySubmitterCard && i.status==='ready'){
-    actionRow=`<div class="mi-actions"><button class="mi-verify" onclick="verifyReceipt('${i.id}')">✓ I got it, confirm receipt</button></div>`;
+    actionRow=`<div class="mi-actions"><button class="mi-verify" onclick="verifyReceipt('${i.id}')">Confirm pickup</button></div>`;
   } else if(isMySubmitterCard && i.status==='verified'){
-    actionRow=`<div class="mi-actions"><div class="mi-done">🎉 Repair confirmed. Thanks, ${esc(i.fixer||'fixer')}!</div></div>`;
+    actionRow=`<div class="mi-actions"><div class="mi-done">Repair confirmed. Thanks, ${esc(i.fixer||'fixer')}.</div></div>`;
   }
   return `<div class="mi-card">
     <div class="mi-head">
       <div class="mi-top"><h3>${esc(i.name)}</h3></div>
       <div class="mi-stat ${i.status}">${statusTxt}</div>
-      ${i.bid?`<div class="mi-timeline">💰 Bid: ${esc(i.bid)}</div>`:''}
-      ${i.timeline?`<div class="mi-timeline">⏱️ Est. ${esc(i.timeline)}</div>`:''}
-      ${(mineToFix&&(i.email||i.phone))?`<div class="mi-timeline">📧 ${esc(i.email||'')}${i.phone?' · 📞 '+esc(i.phone):''}</div>`:''}
+      ${i.bid?`<div class="mi-timeline">Bid ${esc(i.bid)}</div>`:''}
+      ${i.timeline?`<div class="mi-timeline">Est. ${esc(i.timeline)}</div>`:''}
+      ${(mineToFix&&(i.email||i.phone))?`<div class="mi-timeline">${esc(i.email||'')}${i.phone?' · '+esc(i.phone):''}</div>`:''}
       <div class="mi-timeline" style="margin-top:4px">${esc(i.sub)} · submitted ${ago(i.submittedAt)}</div>
     </div>
     ${actionRow}
-    ${i.status==='awaiting'?`<div class="locked" style="margin:0 16px 14px">💬 Chat opens as soon as a fixer claims this.</div>`:`<button class="chat-toggle ${isChatOpen?'open':''} ${showBadge?'has-new':''}" id="ct-${i.code}" onclick="toggleChat('${i.code}')">
-      💬 Chat ${badge}
+    ${i.status==='awaiting'?`<div class="locked" style="margin:0 16px 14px">Chat opens as soon as a fixer claims this.</div>`:`<button class="chat-toggle ${isChatOpen?'open':''} ${showBadge?'has-new':''}" id="ct-${i.code}" onclick="toggleChat('${i.code}')">
+      Chat ${badge}
       <span class="arr">▾</span>
     </button>
     <div class="chat-body-wrap ${isChatOpen?'open':''}" id="cw-${i.code}">
@@ -2311,7 +2425,7 @@ async function sendMsg(code){
    ========================================================= */
 function renderFixers(){
   const grid=document.getElementById('fixgrid');
-  if(!fixers.length){grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="big">🧰</div><b>No fixers listed yet.</b></div>`;return;}
+  if(!fixers.length){grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="big">·</div><b>No fixers listed yet.</b></div>`;return;}
   grid.innerHTML=fixers.map(f=>{
     const femail=(f.email||'').toLowerCase();
     const matches=i=>(femail && (i.fixerEmail||'').toLowerCase()===femail) || i.fixerId===f.id || i.fixer===f.name;
@@ -2319,7 +2433,7 @@ function renderFixers(){
     const inprog=items.filter(i=>i.status==='progress'&&matches(i)).length;
     const initials=f.name.split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
     const pic=f.photo?`<img src="${f.photo}" alt=""/>`:`<div class="avi" style="background:${f.color||'#1E3A52'}">${esc(initials)}</div>`;
-    const stat=done?`🔧 ${done} repair${done>1?'s':''} completed`:inprog?`🛠️ ${inprog} in progress`:`✋ ready for a project`;
+    const stat=done?`${done} repair${done>1?'s':''} completed`:inprog?`${inprog} in progress`:`Ready for a project`;
     return `<div class="fcard">${actingAsAdmin()?`<button class="fedit" onclick="openFixer('${f.id}')">Edit</button>`:''}
       <div class="pic">${pic}</div><h3>${esc(f.name)}</h3>
       <span class="fspec">${esc(f.spec)}</span>
@@ -2371,7 +2485,7 @@ async function startAI(){
 }
 function extractJSON(t){if(!t)return null;t=t.replace(/```json/gi,'').replace(/```/g,'').trim();try{return JSON.parse(t);}catch(_){}const s=t.indexOf('{'),e=t.lastIndexOf('}');if(s>=0&&e>s){try{return JSON.parse(t.slice(s,e+1));}catch(_){}}return null;}
 function renderQs(){
-  document.getElementById('aiBanner').innerHTML=`<b>${esc(aiAnalysis.emoji||'🔧')} ${esc(aiAnalysis.itemName||'Your item')}.</b> ${esc(aiAnalysis.greeting||'')}`;
+  document.getElementById('aiBanner').innerHTML=`<b>${esc(aiAnalysis.itemName||'Your item')}.</b> ${esc(aiAnalysis.greeting||'')}`;
   document.getElementById('qlist').innerHTML=aiAnalysis.questions.map((q,i)=>`<div class="qbox"><div class="qt"><span class="qnum">${i+1}.</span>${esc(q.text)}</div><div class="qopts">${(q.options||[]).map(o=>`<button onclick="pickOpt('${esc(q.id)}','${esc(o)}',this)">${esc(o)}</button>`).join('')}</div></div>`).join('');
   updateQBtn();
 }
@@ -2390,7 +2504,7 @@ async function submitAnswers(){
       maxTokens:300
     });
     const parsed=extractJSON(txt);
-    if(parsed&&parsed.summary){document.getElementById('s-prob').value=parsed.summary;document.getElementById('summaryBanner').innerHTML=`<b>✨ AI summary</b>. Edit if needed.`;document.getElementById('summaryBanner').style.display='block';}
+    if(parsed&&parsed.summary){document.getElementById('s-prob').value=parsed.summary;document.getElementById('summaryBanner').innerHTML=`<b>AI summary</b>. Edit if needed.`;document.getElementById('summaryBanner').style.display='block';}
   }catch(e){ /* no summary available — the user fills in the problem manually */ }
   setSubStep('contact');
 }
@@ -2480,9 +2594,9 @@ async function confirmClaim(){
 async function markReady(id){
   const i=items.find(x=>x.id===id);if(!i)return;
   await updateItem(i.id,{status:'ready',readyAt:new Date().toISOString()});
-  await addMsg(i.code,{id:uid(),role:'sys',text:'Your item is fixed and ready for pickup! 🎉 Please confirm once you have it.',ts:new Date().toISOString()});
+  await addMsg(i.code,{id:uid(),role:'sys',text:'Your item is fixed and ready for pickup. Please confirm once you have it.',ts:new Date().toISOString()});
   await addMsg(i.code,{id:uid(),role:'fixer',who:currentUser.name,text:`All done! Your ${i.name} is repaired and ready to collect.`,ts:new Date(Date.now()+500).toISOString()});
-  toast('Marked ready ✅');
+  toast('Marked ready');
 }
 async function reopen(id){
   const i=items.find(x=>x.id===id);if(!i)return;
@@ -2498,7 +2612,7 @@ async function verifyReceipt(id){
   }
   if(!confirm(`Confirm you've received your repaired ${i.name}? This finalizes the repair and credits ${i.fixer||'the fixer'}.`))return;
   await updateItem(i.id,{status:'verified',verifiedAt:new Date().toISOString()});
-  await addMsg(i.code,{id:uid(),role:'sys',text:`${currentUser.name} confirmed receipt. Repair complete! 🎉`,ts:new Date().toISOString()});
+  await addMsg(i.code,{id:uid(),role:'sys',text:`${currentUser.name} confirmed receipt. Repair complete.`,ts:new Date().toISOString()});
   toast('Repair confirmed. Thanks!');
 }
 
@@ -2546,7 +2660,7 @@ async function saveFixer(){
     fixerDoc={id:uid(),name,spec,bio,email,photo:pendingFPhoto,color:AV_COLORS[fixers.length%AV_COLORS.length]};
   }
   await saveFixerDoc(fixerDoc);
-  close_('fixerOverlay');toast(editFixerId?'Fixer updated':'Fixer added 🧰');
+  close_('fixerOverlay');toast(editFixerId?'Fixer updated':'Fixer added');
 }
 async function removeFixer(){
   if(!actingAsAdmin()){ toast('Only admins can remove fixers'); return; }
@@ -2565,7 +2679,7 @@ function fillCatSelects(){document.getElementById('catSel').innerHTML='<option v
 function setAssignedCategory(cat){
   if(!CATS.includes(cat)) cat='Other';
   const inp=document.getElementById('s-cat'); if(inp) inp.value=cat;
-  const disp=document.getElementById('catDisplay'); if(disp) disp.textContent=`${CAT_ICON[cat]||'🔧'} ${cat}`;
+  const disp=document.getElementById('catDisplay'); if(disp) disp.textContent=`${cat}`;
 }
 function val(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function togglePw(inputId, btnId){
