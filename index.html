@@ -123,8 +123,10 @@ a.btn{text-decoration:none}
 .profile-btn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:.15s;flex:none}
 .profile-btn:hover{border-color:#c0b8a8;background:#fff}
 .profile-btn svg{width:22px;height:22px;color:#6f6a5c}
-.profile-btn.is-in{border-color:var(--orange);background:var(--orange-soft)}
-.profile-btn.is-in svg{color:#A8551A}
+.profile-btn.is-in{border-color:rgba(38,50,60,.12)}
+.profile-btn.is-in svg{display:none}
+.profile-btn .pf-initial{display:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.02rem;color:#fff;line-height:1}
+.profile-btn.is-in .pf-initial{display:block}
 .profile-menu{position:absolute;right:0;top:calc(100% + 9px);background:var(--paper);border:1.5px solid var(--line);border-radius:13px;box-shadow:0 18px 40px -18px rgba(38,50,60,.55);width:225px;max-width:calc(100vw - 24px);display:none;overflow:hidden;z-index:70}
 .profile-menu.open{display:block;animation:pop .16s ease}
 .profile-head{padding:12px 15px;border-bottom:1px solid var(--line)}
@@ -570,7 +572,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
         <button class="btn btn-orange" id="navBoardBtn" style="display:none" onclick="openApp();showView('home')">Fixer board</button>
         <button class="btn btn-orange lnav-start" id="navStartBtn" onclick="startFixRequest()">Start a fix request</button>
         <div class="profile-wrap">
-          <button class="profile-btn" id="pf-btn-nav" onclick="toggleProfileMenu('nav',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <button class="profile-btn" id="pf-btn-nav" onclick="toggleProfileMenu('nav',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg><span class="pf-initial"></span></button>
           <div class="profile-menu" id="pf-menu-nav">
             <div class="profile-head" id="pf-head-nav" style="display:none"><b id="pf-name-nav"></b><span id="pf-email-nav"></span></div>
             <button class="profile-item" id="pf-action-nav" onclick="profileAction()">Sign in</button>
@@ -875,7 +877,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
     <div class="fixpage-actions">
       <button class="btn btn-ghost" onclick="close_('submitOverlay')">← Back</button>
       <div class="profile-wrap">
-          <button class="profile-btn" id="pf-btn-fix" onclick="toggleProfileMenu('fix',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <button class="profile-btn" id="pf-btn-fix" onclick="toggleProfileMenu('fix',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg><span class="pf-initial"></span></button>
           <div class="profile-menu" id="pf-menu-fix">
             <div class="profile-head" id="pf-head-fix" style="display:none"><b id="pf-name-fix"></b><span id="pf-email-fix"></span></div>
             <button class="profile-item" id="pf-action-fix" onclick="profileAction()">Sign in</button>
@@ -946,7 +948,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
     <div class="fixpage-actions">
       <button class="btn btn-ghost" onclick="closeMyItems()">← Back</button>
       <div class="profile-wrap">
-          <button class="profile-btn" id="pf-btn-items" onclick="toggleProfileMenu('items',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <button class="profile-btn" id="pf-btn-items" onclick="toggleProfileMenu('items',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg><span class="pf-initial"></span></button>
           <div class="profile-menu" id="pf-menu-items">
             <div class="profile-head" id="pf-head-items" style="display:none"><b id="pf-name-items"></b><span id="pf-email-items"></span></div>
             <button class="profile-item" id="pf-action-items" onclick="profileAction()">Sign in</button>
@@ -1080,11 +1082,33 @@ function profileAction(){
   if(window.__signedIn){ if(window.signOut)window.signOut(); }
   else{ openAuth('signin'); }
 }
+/* Signed-in avatar: first letter of the first name on the account's own
+   colour (assigned randomly when the profile is created, so it stays the
+   same person-to-person instead of changing on every render). */
+var PF_COLORS=['#E07D2B','#2E6E9E','#4E8D5B','#CF9412','#9B59B6','#1E3A52'];
+function profileInitial(name){
+  var n=(name||'').trim();
+  return n?n.charAt(0).toUpperCase():'?';
+}
+function profileColor(){
+  if(window.__profileColor)return window.__profileColor;
+  // No stored colour yet: derive a stable one from the name/email
+  var seed=(window.__profileName||window.__profileEmail||'');
+  var h=0;
+  for(var i=0;i<seed.length;i++)h=(h*31+seed.charCodeAt(i))>>>0;
+  return PF_COLORS[h%PF_COLORS.length];
+}
 function syncProfileMenus(){
   var inn=!!window.__signedIn;
   PROFILE_KEYS.forEach(function(k){
     var btn=document.getElementById('pf-btn-'+k);
-    if(btn){btn.classList.toggle('is-in',inn);btn.setAttribute('aria-label',inn?'Account menu':'Sign in');}
+    if(btn){
+      btn.classList.toggle('is-in',inn);
+      btn.setAttribute('aria-label',inn?'Account menu':'Sign in');
+      var ini=btn.querySelector('.pf-initial');
+      if(ini)ini.textContent=inn?profileInitial(window.__profileName):'';
+      btn.style.background=inn?profileColor():'';
+    }
     var act=document.getElementById('pf-action-'+k);
     if(act)act.textContent=inn?'👋 Sign out':'Sign in';
     var head=document.getElementById('pf-head-'+k);
@@ -1529,6 +1553,7 @@ function bootApp(){
   window.__signedIn=true;
   window.__profileName=currentUser.name||'Signed in';
   window.__profileEmail=currentUser.email||'';
+  window.__profileColor=currentUser.color||'';
   if(window.syncProfileMenus)window.syncProfileMenus();
   document.getElementById('auth-screen').style.display='block';
   const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='inline-flex';
