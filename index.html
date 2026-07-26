@@ -118,6 +118,22 @@ a.btn{text-decoration:none}
 @media(max-width:860px){.lgallery{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){.lshot,.lshot:hover{transform:none}}
 
+/* ===== PROFILE BUTTON (every top bar) ===== */
+.profile-wrap{position:relative;flex:none}
+.profile-btn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:.15s;flex:none}
+.profile-btn:hover{border-color:#c0b8a8;background:#fff}
+.profile-btn svg{width:22px;height:22px;color:#6f6a5c}
+.profile-btn.is-in{border-color:var(--orange);background:var(--orange-soft)}
+.profile-btn.is-in svg{color:#A8551A}
+.profile-menu{position:absolute;right:0;top:calc(100% + 9px);background:var(--paper);border:1.5px solid var(--line);border-radius:13px;box-shadow:0 18px 40px -18px rgba(38,50,60,.55);width:225px;max-width:calc(100vw - 24px);display:none;overflow:hidden;z-index:70}
+.profile-menu.open{display:block;animation:pop .16s ease}
+.profile-head{padding:12px 15px;border-bottom:1px solid var(--line)}
+.profile-head b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.92rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile-head span{display:block;font-size:.78rem;color:#5d5949;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile-item{width:100%;text-align:left;padding:12px 15px;background:none;border:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.9rem;color:var(--navy);cursor:pointer;transition:.13s}
+.profile-item:hover{background:var(--kraft)}
+.fixpage-actions{display:flex;align-items:center;gap:10px}
+
 /* sections */
 .lsec{max-width:1120px;margin:0 auto;padding:74px 22px;scroll-margin-top:80px}
 .lsec-head{text-align:center;max-width:780px;margin:0 auto 46px}
@@ -553,6 +569,13 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
         <button class="btn btn-ghost" onclick="openMyItems()">My items</button>
         <button class="btn btn-orange" id="navBoardBtn" style="display:none" onclick="openApp();showView('home')">Fixer board</button>
         <button class="btn btn-orange lnav-start" id="navStartBtn" onclick="startFixRequest()">Start a fix request</button>
+        <div class="profile-wrap">
+          <button class="profile-btn" id="pf-btn-nav" onclick="toggleProfileMenu('nav',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <div class="profile-menu" id="pf-menu-nav">
+            <div class="profile-head" id="pf-head-nav" style="display:none"><b id="pf-name-nav"></b><span id="pf-email-nav"></span></div>
+            <button class="profile-item" id="pf-action-nav" onclick="profileAction()">Sign in</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -849,7 +872,16 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 <div class="fixpage-in">
   <div class="fixpage-top">
     <div class="fixpage-brand"><img src="logo.png?v=2" alt=""><b>Fixify</b></div>
-    <button class="btn btn-ghost" onclick="close_('submitOverlay')">← Back</button>
+    <div class="fixpage-actions">
+      <button class="btn btn-ghost" onclick="close_('submitOverlay')">← Back</button>
+      <div class="profile-wrap">
+          <button class="profile-btn" id="pf-btn-fix" onclick="toggleProfileMenu('fix',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <div class="profile-menu" id="pf-menu-fix">
+            <div class="profile-head" id="pf-head-fix" style="display:none"><b id="pf-name-fix"></b><span id="pf-email-fix"></span></div>
+            <button class="profile-item" id="pf-action-fix" onclick="profileAction()">Sign in</button>
+          </div>
+        </div>
+    </div>
   </div>
   <div class="fixpage-head">
     <h2>Start a fix request</h2>
@@ -911,7 +943,16 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 <div class="fixpage-in fixpage-wide">
   <div class="fixpage-top">
     <div class="fixpage-brand"><img src="logo.png?v=2" alt=""><b>Fixify</b></div>
-    <button class="btn btn-ghost" onclick="closeMyItems()">← Back</button>
+    <div class="fixpage-actions">
+      <button class="btn btn-ghost" onclick="closeMyItems()">← Back</button>
+      <div class="profile-wrap">
+          <button class="profile-btn" id="pf-btn-items" onclick="toggleProfileMenu('items',event)" aria-haspopup="true" aria-expanded="false" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.6" r="3.8"></circle><path d="M4.6 20.2c.7-4.1 3.8-6.2 7.4-6.2s6.7 2.1 7.4 6.2"></path></svg></button>
+          <div class="profile-menu" id="pf-menu-items">
+            <div class="profile-head" id="pf-head-items" style="display:none"><b id="pf-name-items"></b><span id="pf-email-items"></span></div>
+            <button class="profile-item" id="pf-action-items" onclick="profileAction()">Sign in</button>
+          </div>
+        </div>
+    </div>
   </div>
   <div class="fixpage-head">
     <h2>My items</h2>
@@ -1009,6 +1050,58 @@ function closeMyItems(){
   var pg=document.getElementById('myItemsPage');
   if(pg)pg.classList.remove('show');
 }
+/* ---- Profile button (one per top bar: landing nav, fix form, My items) ----
+   Shows Sign in when signed out, Sign out (plus who you are) when signed in.
+   window.__signedIn / __profileName / __profileEmail are set by the module's
+   auth listener; syncProfileMenus() paints every instance from them. */
+var PROFILE_KEYS=['nav','fix','items'];
+function closeProfileMenus(except){
+  PROFILE_KEYS.forEach(function(k){
+    if(k===except)return;
+    var m=document.getElementById('pf-menu-'+k);
+    if(m)m.classList.remove('open');
+    var b=document.getElementById('pf-btn-'+k);
+    if(b)b.setAttribute('aria-expanded','false');
+  });
+}
+function toggleProfileMenu(key,e){
+  if(e)e.stopPropagation();
+  closeProfileMenus(key);
+  syncProfileMenus();
+  var m=document.getElementById('pf-menu-'+key);
+  if(!m)return;
+  var open=m.classList.toggle('open');
+  var b=document.getElementById('pf-btn-'+key);
+  if(b)b.setAttribute('aria-expanded',open?'true':'false');
+  if(open){var first=m.querySelector('.profile-item'); if(first)first.focus();}
+}
+function profileAction(){
+  closeProfileMenus();
+  if(window.__signedIn){ if(window.signOut)window.signOut(); }
+  else{ openAuth('signin'); }
+}
+function syncProfileMenus(){
+  var inn=!!window.__signedIn;
+  PROFILE_KEYS.forEach(function(k){
+    var btn=document.getElementById('pf-btn-'+k);
+    if(btn){btn.classList.toggle('is-in',inn);btn.setAttribute('aria-label',inn?'Account menu':'Sign in');}
+    var act=document.getElementById('pf-action-'+k);
+    if(act)act.textContent=inn?'👋 Sign out':'Sign in';
+    var head=document.getElementById('pf-head-'+k);
+    if(head)head.style.display=inn?'block':'none';
+    if(inn){
+      var n=document.getElementById('pf-name-'+k);
+      if(n)n.textContent=window.__profileName||'Signed in';
+      var em=document.getElementById('pf-email-'+k);
+      if(em)em.textContent=window.__profileEmail||'';
+    }
+  });
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest||!e.target.closest('.profile-wrap'))closeProfileMenus();
+});
+syncProfileMenus();
+
 /* Fixer portal lives behind /fixer (redirects to /#fixer). Nothing on the
    public page links here on purpose. */
 function checkFixerRoute(){
@@ -1023,7 +1116,7 @@ if(location.hash!=='#fixer'){
   if(bootEl)bootEl.style.display='none';
 }
 document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){closeAuth();closeMyItems();return;}
+  if(e.key==='Escape'){closeProfileMenus();closeAuth();closeMyItems();return;}
   if(e.key!=='Tab')return;
   // Keep Tab inside the auth dialog while it is open
   var ov=document.getElementById('authOverlay');
@@ -1389,6 +1482,8 @@ onAuthStateChanged(auth, async (fbUser)=>{
     // device. No account UI — just their items and chats.
     hideBoot();
     window.appMode=false;
+    window.__signedIn=false;
+    if(window.syncProfileMenus)window.syncProfileMenus();
     {const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='none';
      const st=document.getElementById('navStartBtn'); if(st)st.style.display='';}
     let savedName='You';
@@ -1405,6 +1500,8 @@ onAuthStateChanged(auth, async (fbUser)=>{
     if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
     currentUser=null; items=[]; fixers=[]; msgsByCode={};
     window.appMode=false;
+    window.__signedIn=false;
+    if(window.syncProfileMenus)window.syncProfileMenus();
     {const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='none';
      const st=document.getElementById('navStartBtn'); if(st)st.style.display='';}
     document.getElementById('app').style.display='none';
@@ -1429,6 +1526,10 @@ function bootApp(){
   // the base, the nav gains a "Fixer board" button, and the board opens as a
   // full page over it (auto-opened when arriving via the /fixer portal).
   window.appMode=true;
+  window.__signedIn=true;
+  window.__profileName=currentUser.name||'Signed in';
+  window.__profileEmail=currentUser.email||'';
+  if(window.syncProfileMenus)window.syncProfileMenus();
   document.getElementById('auth-screen').style.display='block';
   const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='inline-flex';
   const st=document.getElementById('navStartBtn'); if(st)st.style.display='none';
