@@ -136,6 +136,60 @@ a.btn{text-decoration:none}
 .profile-item:hover{background:var(--kraft)}
 .fixpage-actions{display:flex;align-items:center;gap:10px}
 
+/* ===== MOTION LAYER (gru.space-style, tuned for the kraft palette) ===== */
+/* scroll progress hairline */
+.scrollbar{position:fixed;left:0;right:0;top:0;height:3px;z-index:210;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--navy),var(--blue) 28%,var(--green) 52%,var(--amber) 74%,var(--orange));pointer-events:none}
+
+/* hero headline: each line rises out of a mask */
+.lhero h1.rv{opacity:1;transform:none;transition:none}
+.lhero h1 .line{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
+.lhero h1 .line>span{display:block;transform:translateY(112%);transition:transform 1.05s cubic-bezier(.16,1,.3,1)}
+.lhero h1.in .line>span{transform:none}
+.lhero h1 .line:nth-child(2)>span{transition-delay:.1s}
+
+/* parallax layers */
+.lhero-tools{will-change:transform}
+.lband{position:relative;overflow:hidden;background:#26323C}
+.lband-bg{position:absolute;left:0;right:0;top:-14%;height:128%;z-index:0;background:#26323C url('img/fix-wiring.jpg') center 42%/cover no-repeat;will-change:transform}
+.lband::before{z-index:1}
+.lband-in{position:relative;z-index:2}
+
+/* category ticker */
+.lmarquee{overflow:hidden;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line);background:rgba(252,250,243,.5);padding:15px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.lmarquee-track{display:flex;align-items:center;gap:26px;width:max-content;animation:marq 38s linear infinite}
+.lmarquee:hover .lmarquee-track{animation-play-state:paused}
+.lmarquee b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);opacity:.62;white-space:nowrap}
+.lmarquee i{color:var(--orange);font-style:normal;font-size:.8rem}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* reveal variants */
+.rv-scale{transform:translateY(20px) scale(.97)}
+.rv-scale.in{transform:none}
+.rv-left{transform:translateX(-26px)}
+.rv-left.in{transform:none}
+
+/* gallery: photos zoom inside their frame */
+.lshot-img{overflow:hidden;border-radius:7px;display:block}
+.lshot-img img{display:block;transition:transform .85s cubic-bezier(.16,1,.3,1)}
+.lshot:hover .lshot-img img{transform:scale(1.07)}
+
+/* nav underline + button lift */
+.lnav-links a{position:relative}
+.lnav-links a::after{content:"";position:absolute;left:13px;right:13px;bottom:3px;height:2px;border-radius:2px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.lnav-links a:hover::after{transform:scaleX(1)}
+.btn-orange{transition:background .16s,transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s}
+.btn-orange:hover{transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(224,125,43,.75)}
+.fixtile .fic{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.fixtile:hover .fic{transform:translateY(-3px) rotate(-5deg)}
+.step-card .num{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.step-card:hover .num{transform:translateX(4px)}
+
+/* scroll cue under the hero */
+.scrollcue{display:flex;justify-content:center;margin-top:44px}
+.scrollcue span{width:24px;height:38px;border:2px solid rgba(38,50,60,.22);border-radius:999px;position:relative}
+.scrollcue span::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;border-radius:2px;background:var(--orange);transform:translateX(-50%);animation:cue 1.9s cubic-bezier(.4,0,.3,1) infinite}
+@keyframes cue{0%{opacity:0;transform:translate(-50%,-4px)}30%{opacity:1}70%{opacity:1;transform:translate(-50%,13px)}100%{opacity:0;transform:translate(-50%,15px)}}
+
 /* sections */
 .lsec{max-width:1120px;margin:0 auto;padding:74px 22px;scroll-margin-top:80px}
 .lsec-head{text-align:center;max-width:780px;margin:0 auto 46px}
@@ -244,6 +298,12 @@ a.btn{text-decoration:none}
   .ltool{animation:none}
   .swash svg path{animation:none;stroke-dashoffset:0}
   html,#auth-screen{scroll-behavior:auto}
+  .lhero h1 .line>span{transform:none;transition:none}
+  .lmarquee-track{animation:none}
+  .scrollcue{display:none}
+  .lshot:hover .lshot-img img{transform:none}
+  .btn-orange:hover{transform:none}
+  .lnav-links a::after{transition:none}
 }
 @media(max-width:780px){.lnav-links{display:none}}
 @media(max-width:580px){.lnav-cta .btn.lnav-start{display:none}}
@@ -557,6 +617,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 
 <!-- LANDING + AUTH SCREEN (what signed-out visitors see) -->
 <div id="auth-screen" style="display:block">
+  <div class="scrollbar" id="scrollBar" aria-hidden="true"></div>
 
   <!-- landing nav -->
   <div class="lnav" id="lnav">
@@ -592,17 +653,24 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
       <svg class="ltool" style="right:16%;top:44%;width:64px;--rot:24deg;animation-duration:7.5s;animation-delay:1.2s" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M20 12 58 50"></path><ellipse cx="25" cy="17" rx="4" ry="7" transform="rotate(-45 25 17)"></ellipse><path d="M58 50c8 10-4 20-14 14"></path></svg>
     </div>
     <div class="lhero-badge rv"><img src="logo.png?v=2" alt=""><span>Fixify · Repair, don't replace</span></div>
-    <h1 class="rv" style="transition-delay:.06s">Drop off your broken items.<br>Pick them up <span class="swash">fixed.<svg viewBox="0 0 200 14" aria-hidden="true"><path d="M4 10.5 C 58 3.5, 142 3.5, 196 8.5" pathLength="220"></path></svg></span></h1>
+    <h1 class="rv"><span class="line"><span>Drop off your broken items.</span></span><span class="line"><span>Pick them up <span class="swash">fixed.<svg viewBox="0 0 200 14" aria-hidden="true"><path d="M4 10.5 C 58 3.5, 142 3.5, 196 8.5" pathLength="220"></path></svg></span></span></span></h1>
     <p class="lhero-sub rv" style="transition-delay:.12s">Fixify is a team of experienced fixers who bring broken things back to life, for a fair price. Tell us what's wrong, get a bid, and pick it up working again.</p>
     <div class="lhero-cta rv" style="transition-delay:.18s">
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Start a fix request</button>
       <a class="btn btn-ghost btn-lg" href="#how">See how it works</a>
     </div>
     <div class="lhero-note rv" style="transition-delay:.24s">Fair bids · No account needed · Electronics, bikes, toys &amp; more</div>
+    <div class="scrollcue rv" style="transition-delay:.34s" aria-hidden="true"><span></span></div>
+  </div>
+
+  <!-- category ticker -->
+  <div class="lmarquee" aria-hidden="true">
+    <div class="lmarquee-track" id="marqTrack"></div>
   </div>
 
   <!-- workbench photo band -->
   <section class="lband" aria-label="A repair in progress at the Fixify workbench">
+    <div class="lband-bg" aria-hidden="true"></div>
     <div class="lband-in rv">
       <div class="leyebrow">At the workbench</div>
       <h2>Real things, really fixed.</h2>
@@ -651,15 +719,15 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
       <p class="lede">A few recent repairs, caught mid-fix.</p>
     </div>
     <div class="lgallery rv">
-      <figure class="lshot"><img src="img/fix-pressure-washer.jpg" alt="A fixer rebuilding a pressure washer engine"><figcaption>Pressure washer, engine rebuild</figcaption></figure>
-      <figure class="lshot"><img src="img/fix-soldering.jpg" alt="Soldering a display driver board inside a monitor"><figcaption>Display board, fresh solder</figcaption></figure>
-      <figure class="lshot"><img src="img/fix-toaster.jpg" alt="A toaster opened up on the bench next to a multimeter"><figcaption>Toaster, opened up</figcaption></figure>
-      <figure class="lshot"><img src="img/fix-scooter-battery.jpg" alt="Rewiring a scooter battery controller"><figcaption>Scooter battery, rewired</figcaption></figure>
+      <figure class="lshot"><div class="lshot-img"><img src="img/fix-pressure-washer.jpg" alt="A fixer rebuilding a pressure washer engine"></div><figcaption>Pressure washer, engine rebuild</figcaption></figure>
+      <figure class="lshot"><div class="lshot-img"><img src="img/fix-soldering.jpg" alt="Soldering a display driver board inside a monitor"></div><figcaption>Display board, fresh solder</figcaption></figure>
+      <figure class="lshot"><div class="lshot-img"><img src="img/fix-toaster.jpg" alt="A toaster opened up on the bench next to a multimeter"></div><figcaption>Toaster, opened up</figcaption></figure>
+      <figure class="lshot"><div class="lshot-img"><img src="img/fix-scooter-battery.jpg" alt="Rewiring a scooter battery controller"></div><figcaption>Scooter battery, rewired</figcaption></figure>
     </div>
   </section>
 
   <!-- statement strip -->
-  <div class="lstrip rv">
+  <div class="lstrip rv rv-scale">
     <div class="big">Fair bids. Real fixers.<br><em>Nothing goes to waste.</em></div>
     <p>Every repair keeps one more thing out of the landfill, and one more favorite thing in your life.</p>
   </div>
@@ -1154,6 +1222,53 @@ document.addEventListener('keydown',function(e){
   else if(!e.shiftKey && a===last){e.preventDefault();first.focus();}
   else if(!ov.contains(a)){e.preventDefault();first.focus();}
 });
+/* ---- Category ticker: build the track twice so the loop is seamless ---- */
+(function(){
+  var track=document.getElementById('marqTrack');
+  if(!track)return;
+  var cats=['Electronics','Small appliances','Clothing & textiles','Bikes','Jewelry',
+            'Computers','Toys & games','Bags & zippers','Lamps','Speakers'];
+  var half=cats.map(function(c){return '<b>'+c+'</b><i>✦</i>';}).join('');
+  track.innerHTML=half+half;
+})();
+
+/* ---- Scroll-driven motion: progress hairline + parallax layers ---- */
+(function(){
+  var sc=document.getElementById('auth-screen');
+  if(!sc)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar=document.getElementById('scrollBar');
+  var tools=document.querySelector('.lhero-tools');
+  var band=document.querySelector('.lband');
+  var bandBg=document.querySelector('.lband-bg');
+  var queued=false;
+  function paint(){
+    queued=false;
+    var st=sc.scrollTop;
+    if(bar){
+      var max=sc.scrollHeight-sc.clientHeight;
+      bar.style.transform='scaleX('+(max>0?Math.min(1,Math.max(0,st/max)):0)+')';
+    }
+    if(reduce)return;
+    // hero tool sketches drift up slower than the page
+    if(tools && st<sc.clientHeight*1.4){
+      tools.style.transform='translate3d(0,'+(st*0.16).toFixed(1)+'px,0)';
+    }
+    // workbench photo pans inside its frame as the band crosses the viewport
+    if(band && bandBg){
+      var r=band.getBoundingClientRect();
+      if(r.bottom>-80 && r.top<sc.clientHeight+80){
+        var prog=(sc.clientHeight-r.top)/(sc.clientHeight+r.height);
+        bandBg.style.transform='translate3d(0,'+((prog-0.5)*11).toFixed(2)+'%,0)';
+      }
+    }
+  }
+  function onScroll(){ if(!queued){queued=true;requestAnimationFrame(paint);} }
+  sc.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  paint();
+})();
+
 (function(){
   var ov=document.getElementById('authOverlay');
   if(ov)ov.addEventListener('click',function(e){if(e.target===ov)closeAuth();});
