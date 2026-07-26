@@ -88,6 +88,14 @@ service cloud.firestore {
       function fixerUnchanged() {
         return request.resource.data.get('fixerId', null) == resource.data.get('fixerId', null);
       }
+      // The bid and claim details are the fixer's word — the submitter may
+      // not rewrite them after the fact.
+      function claimFieldsUnchanged() {
+        return request.resource.data.get('bid', null) == resource.data.get('bid', null)
+          && request.resource.data.get('timeline', null) == resource.data.get('timeline', null)
+          && request.resource.data.get('fixer', null) == resource.data.get('fixer', null)
+          && request.resource.data.get('fixerEmail', null) == resource.data.get('fixerEmail', null);
+      }
 
       // A fixer taking on an unclaimed item, assigning it to THEMSELVES.
       function claiming() {
@@ -115,10 +123,12 @@ service cloud.firestore {
         signedIn()
         && sameOwnership()
         && (
-          // the owner (e.g. confirming pickup) or the assigned fixer
-          // (mark ready / reopen) — neither may reassign the fixer
-          ((resource.data.submitterId == request.auth.uid
-            || resource.data.fixerId == request.auth.uid) && fixerUnchanged())
+          // the owner (e.g. confirming pickup) — may not reassign the fixer
+          // or rewrite the fixer's bid/claim details
+          (resource.data.submitterId == request.auth.uid
+            && fixerUnchanged() && claimFieldsUnchanged())
+          // the assigned fixer (mark ready / reopen / adjust their own bid)
+          || (resource.data.fixerId == request.auth.uid && fixerUnchanged())
           // or a fixer claiming an open item onto themselves
           || claiming()
         )

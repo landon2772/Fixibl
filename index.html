@@ -268,6 +268,18 @@ a.btn{text-decoration:none}
 .auth-switch b{color:var(--navy);cursor:pointer;font-weight:700}
 .auth-switch b:hover{text-decoration:underline}
 
+/* ===== APP (fixer workspace) — a full page over the public site ===== */
+#app{
+  position:fixed;inset:0;z-index:204;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--kraft);
+  background-image:
+    radial-gradient(circle at 10% 0%,rgba(224,125,43,.14),transparent 36%),
+    radial-gradient(circle at 94% 26%,rgba(46,110,158,.10),transparent 32%),
+    radial-gradient(rgba(38,50,60,.065) 1.4px,transparent 1.4px);
+  background-size:auto,auto,22px 22px;
+  background-repeat:no-repeat,no-repeat,repeat;
+}
+
 /* ===== HEADER ===== */
 header{position:sticky;top:0;z-index:40;background:rgba(243,237,223,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:linear-gradient(90deg,var(--navy),var(--blue) 28%,var(--green) 52%,var(--amber) 74%,var(--orange));opacity:.85}
@@ -539,7 +551,8 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
       </nav>
       <div class="lnav-cta">
         <button class="btn btn-ghost" onclick="openMyItems()">My items</button>
-        <button class="btn btn-orange lnav-start" onclick="startFixRequest()">Start a fix request</button>
+        <button class="btn btn-orange" id="navBoardBtn" style="display:none" onclick="openApp();showView('home')">Fixer board</button>
+        <button class="btn btn-orange lnav-start" id="navStartBtn" onclick="startFixRequest()">Start a fix request</button>
       </div>
     </div>
   </div>
@@ -732,8 +745,9 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
       <div><b>Fixify</b><small>Repair, don't replace</small></div>
     </div>
     <div class="head-right">
+      <button class="btn btn-ghost" onclick="closeApp()" style="padding:8px 13px;font-size:.86rem">← Site</button>
       <nav class="main" id="nav">
-        <button data-v="home" class="on" onclick="showView('home')">Home</button>
+        <button data-v="home" class="on" onclick="showView('home')">Board</button>
         <button data-v="fixers" onclick="showView('fixers')">Fixers</button>
         <button data-v="myitems" onclick="showView('myitems')">My Items</button>
         <button data-v="myrepairs" id="navMyRepairs" onclick="showView('myrepairs')" style="display:none">My Repairs</button>
@@ -843,7 +857,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
   </div>
   <div class="modal fixpage-card">
   <div class="sst" data-step="entry">
-    <p class="msub">Name the item and add a photo. We will ask a few diagnostic questions.</p>
+    <p class="msub">Name the item and add a photo, then describe the problem.</p>
     <div class="field"><label>What is it?</label><input id="s-name" placeholder="e.g. desk lamp, backpack, speaker"></div>
     <div class="field"><label>Photo <span class="opt">(optional, helps a lot)</span></label>
       <label class="photo-pick"><input type="file" accept="image/*" id="s-photo">📷 Add a photo</label>
@@ -851,7 +865,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
     </div>
     <div class="err" id="s-err"></div>
     <div class="modal-foot">
-      <button class="btn btn-orange" onclick="startAI()">Diagnose the issue</button>
+      <button class="btn btn-orange" onclick="startAI()">Continue</button>
     </div>
   </div>
   <div class="sst" data-step="analyzing" style="display:none"><div class="ai-loading"><div class="sp"></div><b>Analyzing your item…</b><span>Figuring out the right questions</span></div></div>
@@ -865,10 +879,7 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
   <div class="sst" data-step="contact" style="display:none">
     <div class="ai-banner" id="summaryBanner" style="display:none"></div>
     <div class="field"><label>What's wrong with it? <span class="opt">(be specific)</span></label><textarea id="s-prob" placeholder="Describe the problem…"></textarea></div>
-    <div class="field"><label>Category <span class="opt">(sorted automatically)</span></label>
-      <div class="cat-display" id="catDisplay">🔧 Other</div>
-      <input type="hidden" id="s-cat" value="Other">
-    </div>
+    <input type="hidden" id="s-cat" value="Other">
     <div class="err" id="s-err2"></div>
     <div class="modal-foot"><button class="btn btn-ghost" onclick="backFromContact()">Back</button><button class="btn btn-orange" onclick="toContactStep()">Continue</button></div>
   </div>
@@ -985,8 +996,10 @@ function startFixRequest(){
   var ov=document.getElementById('submitOverlay');
   if(ov)ov.classList.add('show');
 }
-/* Public My items page (per-device requests + chat). */
+/* Public My items page (per-device requests + chat).
+   Signed-in accounts get theirs inside the fixer workspace instead. */
 function openMyItems(){
+  if(window.appMode && window.openApp){window.openApp();window.showView('myitems');return;}
   var pg=document.getElementById('myItemsPage');
   if(!pg)return;
   pg.classList.add('show');
@@ -1375,6 +1388,9 @@ onAuthStateChanged(auth, async (fbUser)=>{
     // Anonymous session: a public visitor whose fix requests live on this
     // device. No account UI — just their items and chats.
     hideBoot();
+    window.appMode=false;
+    {const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='none';
+     const st=document.getElementById('navStartBtn'); if(st)st.style.display='';}
     let savedName='You';
     try{ savedName=localStorage.getItem('fixify:name')||'You'; }catch(_){}
     currentUser={id:fbUser.uid,name:savedName,email:'',role:'customer',color:'#E07D2B',anon:true};
@@ -1388,6 +1404,9 @@ onAuthStateChanged(auth, async (fbUser)=>{
     if(unsubFixers){unsubFixers();unsubFixers=null;}
     if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
     currentUser=null; items=[]; fixers=[]; msgsByCode={};
+    window.appMode=false;
+    {const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='none';
+     const st=document.getElementById('navStartBtn'); if(st)st.style.display='';}
     document.getElementById('app').style.display='none';
     document.getElementById('auth-screen').style.display='block';
     renderMyItems();
@@ -1403,9 +1422,16 @@ onAuthStateChanged(auth, async (fbUser)=>{
 /* =========================================================
    BOOT
    ========================================================= */
+function openApp(){document.getElementById('app').style.display='block';}
+function closeApp(){document.getElementById('app').style.display='none';}
 function bootApp(){
-  document.getElementById('auth-screen').style.display='none';
-  document.getElementById('app').style.display='block';
+  // The signed-in experience lives ON the public site: the landing stays as
+  // the base, the nav gains a "Fixer board" button, and the board opens as a
+  // full page over it (auto-opened when arriving via the /fixer portal).
+  window.appMode=true;
+  document.getElementById('auth-screen').style.display='block';
+  const nb=document.getElementById('navBoardBtn'); if(nb)nb.style.display='inline-flex';
+  const st=document.getElementById('navStartBtn'); if(st)st.style.display='none';
   // Header — use the exact name the user entered. CSS truncates if it overflows.
   const userChip=document.getElementById('userChip');
   if(userChip) userChip.title='Signed in as '+currentUser.name;
@@ -1423,9 +1449,17 @@ function bootApp(){
   startListeners();
   renderModeUI();
   maybeAskForNotifPermission();
-  // Arriving via the fixer portal: clear any public-page overlays
+  // Clear any public-page overlays
   if(window.closeAuth)window.closeAuth();
   if(window.closeMyItems)window.closeMyItems();
+  if(location.hash==='#fixer'){
+    // Came in through the portal to work: straight to the board
+    openApp(); showView('home');
+    try{history.replaceState(null,'',location.pathname);}catch(_){}
+  }else{
+    closeApp();
+    toast('Signed in. The Fixer board is in the top right.');
+  }
 }
 
 /* =========================================================
@@ -1439,9 +1473,12 @@ function bootApp(){
    ========================================================= */
 function startItemsListener(){
   if(unsubItems)unsubItems();
-  // Fixers and admins see every request; other portal accounts only their own
-  // (the security rules enforce the same split server-side).
-  const src=(clubMode||isAdmin())
+  // Fixers and admins see every request; other portal accounts only their own.
+  // The rules also require a VERIFIED email for crew reads, so only go
+  // full-collection when that will actually be granted.
+  const verified=!!(auth.currentUser && auth.currentUser.emailVerified);
+  const full=(clubMode||isAdmin()) && verified;
+  const src=full
     ? collection(db,'items')
     : query(collection(db,'items'), where('submitterId','==',currentUser.id));
   unsubItems=onSnapshot(src,snap=>{
@@ -1451,7 +1488,18 @@ function startItemsListener(){
     if(document.querySelector('#view-myitems.on'))renderMyItems();
     if(document.querySelector('#view-myrepairs.on'))renderMyRepairs();
     updateNavBadges();
-  },err=>{console.error('items listener',err);toast('Could not load items: '+err.message);});
+  },err=>{
+    console.error('items listener',err);
+    if(full && err.code==='permission-denied'){
+      // Rules refused the crew-wide read (e.g. roster not bootstrapped yet):
+      // fall back to own items so the app stays alive.
+      clubMode=false;
+      startItemsListener();
+      toast('Crew access not active yet. Showing your own items.');
+    }else{
+      toast('Could not load items: '+err.message);
+    }
+  });
 }
 
 /* Listeners for anonymous visitors: their own items and chats, nothing else. */
@@ -1800,7 +1848,7 @@ function renderItems(){
   list.sort((a,b)=>new Date(b.submittedAt)-new Date(a.submittedAt));
   const grid=document.getElementById('grid');
   if(!list.length){
-    grid.innerHTML=`<div class="empty"><div class="big">🛠️</div><b>Nothing here right now.</b><br>${cat==='all'?'Be the first to submit a broken item.':'No items in this category. Try \"All categories\".'}</div>`;
+    grid.innerHTML=`<div class="empty"><div class="big">🛠️</div><b>No open requests right now.</b><br>${cat==='all'?'New fix requests will show up here.':'No items in this category. Try \"All categories\".'}</div>`;
     return;
   }
   grid.innerHTML=list.map(itemCard).join('');
@@ -1929,7 +1977,7 @@ function miCard(i){
       <div class="mi-timeline" style="margin-top:4px">${esc(i.sub)} · submitted ${ago(i.submittedAt)}</div>
     </div>
     ${actionRow}
-    <button class="chat-toggle ${isChatOpen?'open':''} ${showBadge?'has-new':''}" id="ct-${i.code}" onclick="toggleChat('${i.code}')">
+    ${i.status==='awaiting'?`<div class="locked" style="margin:0 16px 14px">💬 Chat opens as soon as a fixer claims this.</div>`:`<button class="chat-toggle ${isChatOpen?'open':''} ${showBadge?'has-new':''}" id="ct-${i.code}" onclick="toggleChat('${i.code}')">
       💬 Chat ${badge}
       <span class="arr">▾</span>
     </button>
@@ -1939,7 +1987,7 @@ function miCard(i){
         <input id="ci-${i.code}" placeholder="Type a message…"/>
         <button onclick="sendMsg('${i.code}')">Send</button>
       </div>
-    </div>
+    </div>`}
   </div>`;
 }
 
@@ -1967,7 +2015,7 @@ function restoreChatInputs(snap){
 function toggleChat(code){
   const wasOpen=!!openChats[code];
   openChats[code]=!wasOpen;
-  if(!wasOpen) markSeen(code);
+  markSeen(code);
   // Re-render the active list — miCard now reads openChats so the panel stays open
   // and refillOpenChats() repopulates the message body. The badge updates naturally.
   const pubPage=document.getElementById('myItemsPage');
@@ -2154,11 +2202,12 @@ async function submitItem(){
   // The submitter has "seen" the system message they just caused.
   markSeen(id);
   if(currentUser.anon) startCustomerListeners();
+  maybeAskForNotifPermission();
   setSubStep('success');
 }
 function goToMyItems(){
   close_('submitOverlay');
-  if(currentUser && !currentUser.anon){ showView('myitems'); }
+  if(currentUser && !currentUser.anon){ openApp(); showView('myitems'); }
   else if(window.openMyItems){ window.openMyItems(); }
 }
 
@@ -2304,7 +2353,7 @@ document.getElementById('su-pw').addEventListener('keydown',e=>{if(e.key==='Ente
 Object.assign(window,{
   switchAuthTab, signIn, signUp, googleSignIn, signOut, togglePw,
   showView, setFilter, renderItems, gotoChat,
-  openSubmit, skipAI, startAI, setSubStep, pickOpt, submitAnswers,
+  openSubmit, openApp, closeApp, skipAI, startAI, setSubStep, pickOpt, submitAnswers,
   backFromContact, submitItem, toContactStep, goToMyItems, renderMyItems, close_,
   openClaim, confirmClaim, markReady, reopen, verifyReceipt,
   openFixer, saveFixer, removeFixer,
