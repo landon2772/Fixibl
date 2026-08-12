@@ -1897,7 +1897,6 @@ function startListeners(){
     renderFixers();
     // Now that the fixers list is fresh, re-derive whether the current user is a fixer
     syncUserRole();
-    syncFixerRoster();
   },err=>{console.error('fixers listener',err);});
 
   // MESSAGES — scoped to threads the current user is a participant in
@@ -1967,20 +1966,10 @@ async function adminSetCategory(id,cat){
   await updateItem(id,{cat});
   toast('Category updated');
 }
-/* Mirror the fixer emails into meta/fixers {emails:[...]} so the Firestore
-   security rules can check who is allowed to claim repairs (rules can't query
-   the fixers collection directly). Only admins can write that doc, so this
-   runs — and self-heals — whenever an admin has the site open. */
-async function syncFixerRoster(){
-  if(!isAdmin())return;
-  const emails=[...new Set(fixers.map(f=>(f.email||'').toLowerCase()).filter(Boolean))].sort();
-  try{
-    const ref=doc(db,'meta','fixers');
-    const snap=await getDoc(ref);
-    const cur=snap.exists()?(snap.data().emails||[]).slice().sort():null;
-    if(!cur||JSON.stringify(cur)!==JSON.stringify(emails)) await setDoc(ref,{emails});
-  }catch(e){ console.error('fixer roster sync',e); }
-}
+// (Removed syncFixerRoster: it wrote a meta/fixers doc that the deployed
+//  Firestore rules neither allow nor use, which caused a "Missing or
+//  insufficient permissions" error on every admin page load. Fixer access
+//  is derived from the fixers collection directly, so nothing needs it.)
 async function saveFixerDoc(f){
   try{ await setDoc(doc(db,'fixers',f.id), f); }
   catch(e){ console.error(e); toast('Could not save fixer: '+e.message); }
