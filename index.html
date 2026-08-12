@@ -1539,6 +1539,9 @@ let unsubItems=null,unsubFixers=null,unsubMsgs=null,unsubStats=null;
 // Public "kept from landfill" tally — counted from ALL verified items, so it is
 // identical for every user regardless of what their role-scoped board loads.
 let publicFixedCount=0;
+// Set true only if a full-board read is refused by the rules, so we degrade to
+// just this user's own items instead of an empty board.
+let forceOwnItems=false;
 
 /* =========================================================
    AUTH  (Firebase Authentication)
@@ -1837,11 +1840,11 @@ function bootApp(){
    ========================================================= */
 function startItemsListener(){
   if(unsubItems)unsubItems();
-  // Fixers and admins see every request; other portal accounts only their own.
-  // The deployed Firestore rules allow any signed-in user to read items, so
-  // crew/admin get the full board without needing a verified email. (The
-  // error handler below still falls back to own-items if a read is refused.)
-  const full=(clubMode||isAdmin());
+  // Everyone signed in loads the full public board of open requests so listings
+  // are visible to all users. The "Claim repair" button is still crew-only in
+  // the UI (see itemCard). If a full read is ever refused, we fall back to just
+  // this user's own items so the app stays usable.
+  const full=!forceOwnItems;
   const src=full
     ? collection(db,'items')
     : query(collection(db,'items'), where('submitterId','==',currentUser.id));
@@ -1855,11 +1858,11 @@ function startItemsListener(){
   },err=>{
     console.error('items listener',err);
     if(full && err.code==='permission-denied'){
-      // Rules refused the crew-wide read (e.g. roster not bootstrapped yet):
-      // fall back to own items so the app stays alive.
-      clubMode=false;
+      // Rules refused the full-board read: fall back to own items so the app
+      // stays alive (does not loop — forceOwnItems flips the query next time).
+      forceOwnItems=true;
       startItemsListener();
-      toast('Crew access not active yet. Showing your own items.');
+      toast('Showing your own items.');
     }else{
       toast('Could not load items: '+err.message);
     }
