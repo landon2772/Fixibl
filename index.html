@@ -615,7 +615,9 @@ h1,h2,h3,.lhero h1,.lsec-head h2,.lcta-card h2,.lband h2,.page-head h2,.fixpage-
   font-family:var(--font-display);font-optical-sizing:auto;font-weight:600;letter-spacing:-.018em}
 .lhero h1{font-weight:600;letter-spacing:-.028em;line-height:1.05;font-size:clamp(2.5rem,6.4vw,4.5rem)}
 .lsec-head h2,.lcta-card h2,.lband h2{letter-spacing:-.022em;line-height:1.12}
-.lhero-sub,.lsec-head .lede,.lcta-card>p,.lband p{font-size:1.04rem;line-height:1.72;color:var(--muted)}
+.lhero-sub,.lsec-head .lede,.lcta-card>p{font-size:1.04rem;line-height:1.72;color:var(--muted)}
+/* .lband p sits on the dark photo band — keep it light (see .lband p above). */
+.lband p{font-size:1.04rem;line-height:1.72;color:#E6EFE2}
 .leyebrow{font-family:var(--font-ui);font-weight:600;font-size:.72rem;letter-spacing:.17em;color:var(--orange)}
 .btn{font-family:var(--font-ui);font-weight:600;letter-spacing:0;border-radius:9px}
 .btn.btn-lg{border-radius:10px;font-size:1.02rem;padding:14px 26px}
@@ -1533,7 +1535,10 @@ let aiAnalysis=null,aiAnswers={};
 let openChats={}; // itemId → bool
 let msgsByCode={}; // code → [messages]
 let msgsBootstrapDone=false; // first snapshot fires for ALL existing messages — don't notify on those
-let unsubItems=null,unsubFixers=null,unsubMsgs=null;
+let unsubItems=null,unsubFixers=null,unsubMsgs=null,unsubStats=null;
+// Public "kept from landfill" tally — counted from ALL verified items, so it is
+// identical for every user regardless of what their role-scoped board loads.
+let publicFixedCount=0;
 
 /* =========================================================
    AUTH  (Firebase Authentication)
@@ -1754,6 +1759,7 @@ onAuthStateChanged(auth, async (fbUser)=>{
     if(unsubItems){unsubItems();unsubItems=null;}
     if(unsubFixers){unsubFixers();unsubFixers=null;}
     if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
+    if(unsubStats){unsubStats();unsubStats=null;}
     currentUser=null; items=[]; fixers=[]; msgsByCode={};
     window.appMode=false;
     window.__signedIn=false;
@@ -1860,8 +1866,25 @@ function startItemsListener(){
   });
 }
 
+/* Public landfill tally — counts EVERY verified item, independent of the
+   role-scoped board query, so the "Fixed & kept from landfill" number is the
+   same for every user and updates live as repairs are confirmed. */
+function startStatsListener(){
+  if(unsubStats)unsubStats();
+  unsubStats=onSnapshot(
+    query(collection(db,'items'), where('status','==','verified')),
+    snap=>{
+      publicFixedCount=snap.size;
+      const n=document.querySelector('#impact .n');
+      if(n) n.textContent=publicFixedCount;
+    },
+    err=>{ console.error('stats listener',err); }
+  );
+}
+
 /* Listeners for anonymous visitors: their own items and chats, nothing else. */
 function startCustomerListeners(){
+  startStatsListener();
   if(unsubItems)unsubItems();
   unsubItems=onSnapshot(query(collection(db,'items'), where('submitterId','==',currentUser.id)),snap=>{
     items=snap.docs.map(d=>d.data());
@@ -1889,6 +1912,8 @@ function startCustomerListeners(){
 function startListeners(){
   // ITEMS — live board (scoped by role)
   startItemsListener();
+  // Public landfill tally — same number for everyone, independent of the board scope
+  startStatsListener();
 
   // FIXERS — live crew
   if(unsubFixers)unsubFixers();
@@ -2171,7 +2196,7 @@ function shortTs(iso){const d=new Date(iso),now=new Date();return d.toDateString
 function renderItems(){
   // Single hero stat — total items rescued from the landfill.
   // Only count items the submitter has confirmed they received — fixers earn credit on confirmation.
-  const fixedCount=items.filter(i=>i.status==='verified').length;
+  const fixedCount=publicFixedCount;
   document.getElementById('impact').innerHTML=`
     <div class="istat hero green">
       
