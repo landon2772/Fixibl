@@ -1832,10 +1832,10 @@ function bootApp(){
 function startItemsListener(){
   if(unsubItems)unsubItems();
   // Fixers and admins see every request; other portal accounts only their own.
-  // The rules also require a VERIFIED email for crew reads, so only go
-  // full-collection when that will actually be granted.
-  const verified=!!(auth.currentUser && auth.currentUser.emailVerified);
-  const full=(clubMode||isAdmin()) && verified;
+  // The deployed Firestore rules allow any signed-in user to read items, so
+  // crew/admin get the full board without needing a verified email. (The
+  // error handler below still falls back to own-items if a read is refused.)
+  const full=(clubMode||isAdmin());
   const src=full
     ? collection(db,'items')
     : query(collection(db,'items'), where('submitterId','==',currentUser.id));
