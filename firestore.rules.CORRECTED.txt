@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    // Admins are identified by email. (No email_verified requirement here, to
+    // match how the app currently signs admins in. Sign in with Google for a
+    // verified email if you later want to tighten this.)
+    function isAdminEmail() {
+      return signedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email.lower() in ['landon.olson@menloschool.org'];
+    }
+
+    // Each user owns their own profile doc (id == their uid)
+    match /users/{uid} {
+      allow read:          if signedIn();
+      allow create, update: if signedIn() && request.auth.uid == uid;
+      allow delete:        if false;
+    }
+
+    // Board items (fix requests)
+    match /items/{itemId} {
+      allow read:   if signedIn();
+      allow create: if signedIn()
+                    && request.resource.data.submitterId == request.auth.uid;
+      // Any signed-in user may update: fixers claim / mark ready, submitters
+      // confirm pickup, and admins delist/relist or re-category.
+      allow update: if signedIn();
+      // The submitter can delete their own item; an ADMIN can delete ANY item.
+      allow delete: if signedIn()
+                    && (resource.data.submitterId == request.auth.uid || isAdminEmail());
+    }
+
+    // Fixers roster — signed-in users can read; only admins manage.
+    match /fixers/{fixerId} {
+      allow read:  if signedIn();
+      allow write: if isAdminEmail();
+    }
+
+    // Chat messages — signed-in users can read & post; never edited/deleted.
+    match /messages/{messageId} {
+      allow read:   if signedIn();
+      allow create: if signedIn()
+                    && request.resource.data.who is string
+                    && request.resource.data.text is string;
+      allow update, delete: if false;
+    }
+  }
+}

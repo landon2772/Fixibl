@@ -1,6 +1,6 @@
-# Fixify 🦫
+# Fixibl 🦫
 
-**Repair, don't replace.** Fixify is a repair service site: send a fix
+**Repair, don't replace.** Fixibl is a repair service site: send a fix
 request (no account needed), a fixer claims it and sends you a bid, you chat
 until it's ready, then pick it up. Fixers work from a hidden portal at
 `/fixer`.
@@ -29,7 +29,7 @@ items and chats stay linked to their browser. For that to work:
 2. Enable the **Anonymous** provider and save.
 
 Until this is enabled, nobody can submit a fix request (the form will show
-"Could not reach Fixify right now").
+"Could not reach Fixibl right now").
 
 ## ⚠️ Publish the security rules (one-time, important)
 
