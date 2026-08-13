@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:title" content="Fixibl - Drop off your broken items. Pick them up fixed.">
-<meta property="og:description" content="A team of experienced fixers repairs your electronics, appliances, clothing, bikes, jewelry, computers, toys, and more. Fair bids, never more than replacing it. Repair, don't replace.">
+<meta property="og:description" content="A team of experienced fixers repairs your electronics, appliances, clothing, bikes, jewelry, computers, toys, and more. Fair bids, never more than replacing it. Anything is Fixibl.">
 <meta property="og:image" content="https://www.fixifyit.org/logo.png">
 <meta property="og:url" content="https://www.fixifyit.org/">
 <meta property="og:type" content="website">
@@ -378,6 +378,10 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px
 .brand small{display:block;font-size:.6rem;color:#A8551A;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-top:1px}
 .brand b{display:block;line-height:1.05}
 .head-right{display:flex;align-items:center;gap:10px}
+.head-collapse{display:flex;align-items:center;gap:10px}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:38px;height:38px;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;cursor:pointer;padding:0;flex:none}
+.hamburger:hover{border-color:#c0b8a8}
+.hamburger span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
 nav.main{display:flex;gap:2px}
 nav.main button{position:relative;font-family:var(--font-ui);font-weight:600;font-size:.9rem;color:var(--ink);background:none;border:none;cursor:pointer;padding:7px 11px;border-radius:9px;transition:.15s;opacity:.72}
 nav.main button.has-unread{opacity:1}
@@ -572,33 +576,26 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 .tooldeco{position:fixed;inset:0;pointer-events:none;z-index:0}
 .tool{position:fixed;color:#2c4a63;opacity:.12;pointer-events:none}
 @media(max-width:1140px){.tooldeco{display:none}}
-/* ===== Compact app header on small screens ===== */
+/* ===== Mobile app header: collapse nav + switch into a hamburger menu ===== */
 @media(max-width:640px){
   .head-in{gap:8px;padding:0 12px}
-  .brand{flex:none}
   .brand small{display:none}
-  /* head-right fills the row; the nav is the flexible piece that scrolls */
-  .head-right{flex:1;min-width:0;justify-content:flex-end;gap:8px}
-  nav.main{min-width:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-  nav.main::-webkit-scrollbar{display:none}
-  nav.main button{flex:none;padding:6px 9px;font-size:.85rem}
-  /* keep the escape-to-site button and admin switch from stealing space */
-  .head-right>.btn-ghost{flex:none;padding:7px 10px;font-size:.8rem}
-  .va-switch{flex:none}
-  .va-switch button{padding:4px 8px;font-size:.68rem}
-  /* Collapse the account chip to just the avatar so the header never overflows */
+  .hamburger{display:inline-flex}
+  /* The nav, "Site" button and admin switch drop into a dropdown panel */
+  .head-collapse{position:absolute;top:calc(100% + 8px);right:10px;flex-direction:column;align-items:stretch;gap:6px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;box-shadow:0 18px 40px -18px rgba(38,50,60,.55);padding:8px;min-width:min(230px,calc(100vw - 20px));display:none;z-index:55}
+  .head-collapse.open{display:flex}
+  .head-collapse nav.main{flex-direction:column;gap:2px;min-width:0}
+  .head-collapse nav.main button{width:100%;text-align:left;font-size:.95rem;padding:10px 12px}
+  .head-collapse>.btn-ghost{width:100%;justify-content:flex-start}
+  .head-collapse .va-switch{align-self:stretch;justify-content:space-between;margin-top:2px}
+  .head-collapse .va-switch button{flex:1;text-align:center}
+  /* Collapse the account chip to just the avatar */
   .user-chip .un,.user-chip .chev{display:none}
-  .user-chip{padding:5px;flex:none}
-  /* Anchor the dropdown to the viewport corner so it's always fully on-screen */
+  .user-chip{padding:5px}
   .user-menu{position:fixed;top:74px;right:10px;left:auto;width:min(230px,calc(100vw - 20px))}
 }
 @media(max-width:580px){.two{grid-template-columns:1fr}}
-/* Very narrow: drop the wordmark and the "Site" label, keep the logo + arrow */
-@media(max-width:430px){
-  .brand b{display:none}
-  .head-right>.btn-ghost{font-size:0;padding:7px 9px}
-  .head-right>.btn-ghost::before{content:"←";font-size:1rem}
-}
+@media(max-width:430px){.brand b{display:none}}
 
 /* ===== LOGO (PNG) ===== */
 .brand-logo{width:36px;height:36px;flex:none;object-fit:contain;border-radius:9px}
@@ -904,7 +901,7 @@ header{border-bottom:1px solid var(--line)}
   <!-- landing footer -->
   <footer class="lfoot">
     <div class="lfoot-in">
-      <div class="lfoot-brand"><img src="logo.png?v=2" alt=""><div><b>Fixibl</b><small>Repair, don't replace</small></div></div>
+      <div class="lfoot-brand"><img src="logo.png?v=2" alt=""><div><b>Fixibl</b><small>Anything is Fixibl</small></div></div>
       <nav class="lfoot-links" aria-label="Footer">
         <a href="#how">How it works</a>
         <a href="#what">What we fix</a>
@@ -982,21 +979,24 @@ header{border-bottom:1px solid var(--line)}
     <div class="brand" onclick="showView('home')">
       <img src="logo.png?v=2" alt="Fixibl logo" class="brand-logo" onload="this.style.display='';if(this.nextElementSibling)this.nextElementSibling.style.display='none'" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block'" style="display: none;">
       <svg viewBox="0 0 48 48" class="brand-logo-fallback" style="display: block;"><rect x="2" y="2" width="44" height="44" rx="12" fill="#1E3A52"></rect><polygon points="24,13 32.7,18 32.7,28 24,33 15.3,28 15.3,18" fill="none" stroke="#FCFAF3" stroke-width="3" stroke-linejoin="round"></polygon><circle cx="24" cy="23" r="4.3" fill="#FCFAF3"></circle><path d="M24 13c.1-3.6 2.7-6.2 6.4-6.5-.1 3.7-2.7 6.3-6.4 6.5z" fill="#6BBE85"></path><circle cx="33" cy="9.6" r="1.7" fill="#E07D2B"></circle></svg>
-      <div><b>Fixibl</b><small>Repair, don't replace</small></div>
+      <div><b>Fixibl</b><small>Anything is Fixibl</small></div>
     </div>
     <div class="head-right">
-      <button class="btn btn-ghost" onclick="closeApp()" style="padding:8px 13px;font-size:.86rem">← Site</button>
-      <nav class="main" id="nav">
-        <button data-v="home" class="on" onclick="showView('home')">Board</button>
-        <button data-v="fixers" onclick="showView('fixers')">Fixers</button>
-        <button data-v="myitems" onclick="showView('myitems')">My Items</button>
-        <button data-v="myrepairs" id="navMyRepairs" onclick="showView('myrepairs')" style="display:none">My Repairs</button>
-      </nav>
-      <div class="va-switch" id="vaSwitch" style="display:none" role="group" aria-label="Preview as" title="Switch which view you're previewing">
-        <button data-mode="admin" onclick="setViewMode('admin')">Admin</button>
-        <button data-mode="fixer" onclick="setViewMode('fixer')">Fixer</button>
-        <button data-mode="user" onclick="setViewMode('user')">User</button>
+      <div class="head-collapse" id="headCollapse">
+        <button class="btn btn-ghost" onclick="closeApp()" style="padding:8px 13px;font-size:.86rem">← Site</button>
+        <nav class="main" id="nav">
+          <button data-v="home" class="on" onclick="showView('home')">Board</button>
+          <button data-v="fixers" onclick="showView('fixers')">Fixers</button>
+          <button data-v="myitems" onclick="showView('myitems')">My Items</button>
+          <button data-v="myrepairs" id="navMyRepairs" onclick="showView('myrepairs')" style="display:none">My Repairs</button>
+        </nav>
+        <div class="va-switch" id="vaSwitch" style="display:none" role="group" aria-label="Preview as" title="Switch which view you're previewing">
+          <button data-mode="admin" onclick="setViewMode('admin')">Admin</button>
+          <button data-mode="fixer" onclick="setViewMode('fixer')">Fixer</button>
+          <button data-mode="user" onclick="setViewMode('user')">User</button>
+        </div>
       </div>
+      <button class="hamburger" id="hamburger" onclick="toggleHeadMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <div class="user-wrap">
         <button class="user-chip" id="userChip" onclick="toggleUserMenu(event)" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
           <span class="av" id="userAv" style="background:#E07D2B">?</span>
@@ -1743,6 +1743,19 @@ function closeUserMenu(opts={}){
   if(chip){ chip.setAttribute('aria-expanded','false'); if(opts.focusChip)chip.focus(); }
 }
 document.addEventListener('click',e=>{ if(!e.target.closest('.user-wrap')) closeUserMenu(); });
+
+/* Mobile header dropdown (hamburger) */
+function toggleHeadMenu(){
+  const el=document.getElementById('headCollapse'); if(!el)return;
+  const open=!el.classList.contains('open');
+  el.classList.toggle('open',open);
+  const h=document.getElementById('hamburger'); if(h)h.setAttribute('aria-expanded',open?'true':'false');
+}
+function closeHeadMenu(){
+  const el=document.getElementById('headCollapse'); if(el)el.classList.remove('open');
+  const h=document.getElementById('hamburger'); if(h)h.setAttribute('aria-expanded','false');
+}
+document.addEventListener('click',e=>{ if(!e.target.closest('#headCollapse') && !e.target.closest('#hamburger')) closeHeadMenu(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeUserMenu({focusChip:true}); });
 document.addEventListener('focusout',e=>{
   const wrap=document.querySelector('.user-wrap');
@@ -2157,6 +2170,7 @@ function showView(v){
   window.scrollTo({top:0,behavior:'smooth'});
   if(v==='myitems')   renderMyItems();
   if(v==='myrepairs') renderMyRepairs();
+  closeHeadMenu();
 }
 
 // Jump from a board card to the right list view AND auto-expand that chat
@@ -2769,7 +2783,7 @@ Object.assign(window,{
   openClaim, confirmClaim, markReady, reopen, verifyReceipt,
   openFixer, saveFixer, removeFixer,
   toggleChat, sendMsg, toggleUserMenu, startSignup,
-  setViewMode, adminToggleDelist, adminDeleteItem, adminSetCategory
+  setViewMode, toggleHeadMenu, adminToggleDelist, adminDeleteItem, adminSetCategory
 });
 
 // Boot is driven by onAuthStateChanged above — nothing to do here.
