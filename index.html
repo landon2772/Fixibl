@@ -264,7 +264,10 @@ a.btn{text-decoration:none}
 .lfoot-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .lfoot-links a,.lfoot-links button{color:#5d5949;font-size:.89rem;font-weight:600;text-decoration:none;padding:7px 11px;border-radius:8px;transition:.15s;background:none;border:none;cursor:pointer;font-family:inherit}
 .lfoot-links a:hover,.lfoot-links button:hover{color:var(--navy);background:rgba(38,50,60,.05)}
-.lfoot-eco{text-align:center;color:#5d5949;font-size:.79rem;padding:0 22px 26px}
+.lfoot-eco{text-align:center;color:#5d5949;font-size:.79rem;padding:0 22px 14px}
+.lfoot-contact{text-align:center;color:#5d5949;font-size:.82rem;padding:0 22px 26px}
+.lfoot-contact a{color:var(--orange);font-weight:600;text-decoration:none}
+.lfoot-contact a:hover{text-decoration:underline}
 
 /* full-page fix request form + public My items page */
 .fixpage-wide{max-width:780px}
@@ -569,12 +572,32 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 .tooldeco{position:fixed;inset:0;pointer-events:none;z-index:0}
 .tool{position:fixed;color:#2c4a63;opacity:.12;pointer-events:none}
 @media(max-width:1140px){.tooldeco{display:none}}
-@media(max-width:580px){.two{grid-template-columns:1fr}.brand small{display:none}nav.main button{padding:6px 8px;font-size:.84rem}.va-switch .va-txt{display:none}.head-in{gap:6px}
+/* ===== Compact app header on small screens ===== */
+@media(max-width:640px){
+  .head-in{gap:8px;padding:0 12px}
+  .brand{flex:none}
+  .brand small{display:none}
+  /* head-right fills the row; the nav is the flexible piece that scrolls */
+  .head-right{flex:1;min-width:0;justify-content:flex-end;gap:8px}
+  nav.main{min-width:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+  nav.main::-webkit-scrollbar{display:none}
+  nav.main button{flex:none;padding:6px 9px;font-size:.85rem}
+  /* keep the escape-to-site button and admin switch from stealing space */
+  .head-right>.btn-ghost{flex:none;padding:7px 10px;font-size:.8rem}
+  .va-switch{flex:none}
+  .va-switch button{padding:4px 8px;font-size:.68rem}
   /* Collapse the account chip to just the avatar so the header never overflows */
   .user-chip .un,.user-chip .chev{display:none}
-  .user-chip{padding:5px}
+  .user-chip{padding:5px;flex:none}
   /* Anchor the dropdown to the viewport corner so it's always fully on-screen */
   .user-menu{position:fixed;top:74px;right:10px;left:auto;width:min(230px,calc(100vw - 20px))}
+}
+@media(max-width:580px){.two{grid-template-columns:1fr}}
+/* Very narrow: drop the wordmark and the "Site" label, keep the logo + arrow */
+@media(max-width:430px){
+  .brand b{display:none}
+  .head-right>.btn-ghost{font-size:0;padding:7px 9px}
+  .head-right>.btn-ghost::before{content:"←";font-size:1rem}
 }
 
 /* ===== LOGO (PNG) ===== */
@@ -583,11 +606,11 @@ footer{text-align:center;color:#5d5949;font-size:.79rem;padding:24px 18px;border
 .auth-logo-img{width:44px;height:44px;flex:none;object-fit:contain;border-radius:11px}
 .auth-logo-fallback{width:44px;height:44px;flex:none}
 
-/* ===== ADMIN "VIEW AS USER" SWITCH ===== */
-.va-switch{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1.5px solid var(--line);color:var(--ink);font-family:var(--font-ui);font-weight:700;font-size:.78rem;padding:6px 11px;border-radius:999px;cursor:pointer;transition:.15s}
-.va-switch:hover{border-color:#c0b8a8}
-.va-switch .va-dot{width:9px;height:9px;border-radius:50%;background:#9aa6ad;transition:.15s;flex:none}
-.va-switch.on .va-dot{background:#6BBE85;box-shadow:0 0 0 3px rgba(107,190,133,.3)}
+/* ===== ADMIN VIEW SWITCH (admin / fixer / user) ===== */
+.va-switch{display:inline-flex;align-items:center;gap:2px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:3px}
+.va-switch button{font-family:var(--font-ui);font-weight:700;font-size:.74rem;border:none;background:none;color:var(--muted);cursor:pointer;padding:5px 11px;border-radius:999px;transition:.14s;line-height:1}
+.va-switch button:hover{color:var(--ink)}
+.va-switch button.on{background:var(--navy);color:#fff}
 
 /* ===== ADMIN LISTING CONTROLS ===== */
 .admin-strip{margin-top:4px;border-top:1px dashed var(--line);padding-top:9px;display:flex;flex-direction:column;gap:7px}
@@ -771,7 +794,7 @@ header{border-bottom:1px solid var(--line)}
       <svg class="ltool" style="right:7%;bottom:18%;width:72px;--rot:-6deg;animation-duration:10s;animation-delay:.4s" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.3" stroke-linejoin="round"><polygon points="50,20 76,35 76,65 50,80 24,65 24,35"></polygon><circle cx="50" cy="50" r="11"></circle></svg>
       <svg class="ltool" style="right:16%;top:44%;width:64px;--rot:24deg;animation-duration:7.5s;animation-delay:1.2s" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M20 12 58 50"></path><ellipse cx="25" cy="17" rx="4" ry="7" transform="rotate(-45 25 17)"></ellipse><path d="M58 50c8 10-4 20-14 14"></path></svg>
     </div>
-    <div class="lhero-badge rv"><img src="logo.png?v=2" alt=""><span>Fixibl · Repair, don't replace</span></div>
+    <div class="lhero-badge rv"><img src="logo.png?v=2" alt=""><span>Fixibl · Anything is Fixibl</span></div>
     <h1 class="rv"><span class="line"><span>Drop off your broken items.</span></span><span class="line"><span>Pick them up <span class="swash">fixed.<svg viewBox="0 0 200 14" aria-hidden="true"><path d="M4 10.5 C 58 3.5, 142 3.5, 196 8.5" pathLength="220"></path></svg></span></span></span></h1>
     <p class="lhero-sub rv" style="transition-delay:.12s">Fixibl is a team of experienced fixers who bring broken things back to life, for a fair price. Tell us what's wrong, get a bid, and pick it up working again.</p>
     <div class="lhero-cta rv" style="transition-delay:.18s">
@@ -801,7 +824,7 @@ header{border-bottom:1px solid var(--line)}
   <section class="lsec" id="how">
     <div class="lsec-head rv">
       <div class="leyebrow">How it works</div>
-      <h2>Broken doesn't mean done.</h2>
+      <h2>Broken? Totally Fixibl.</h2>
       <p class="lede">Fixibl has a team of experienced fixers who will fix your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Every repair starts with a bid from your fixer, and it will never cost more than replacing the item.</p>
     </div>
     <div class="lsteps">
@@ -854,7 +877,7 @@ header{border-bottom:1px solid var(--line)}
   <!-- fix request CTA -->
   <section class="lcta" id="request">
     <div class="lcta-card rv">
-      <h2>Have something broken?</h2>
+      <h2>Got something broken? It's Fixibl.</h2>
       <div class="lcta-sub">Find out how to get it fixed.</div>
       <p>First, fill out a fix request: tell us what's broken, snap a photo, and send it in. A fixer will claim it, message you with a bid and timeline, and arrange drop-off. Then all that's left is picking it up fixed.</p>
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Fill out a fix request</button>
@@ -890,6 +913,11 @@ header{border-bottom:1px solid var(--line)}
       </nav>
     </div>
     <div class="lfoot-eco">Every repair keeps one more thing out of the landfill. Donations always welcome.</div>
+    <div class="lfoot-contact">
+      Support <a href="mailto:support@fixibl.com">support@fixibl.com</a> ·
+      Feedback <a href="mailto:feedback@fixibl.com">feedback@fixibl.com</a> ·
+      Contact <a href="mailto:contact@fixibl.com">contact@fixibl.com</a>
+    </div>
   </footer>
 
   <!-- auth overlay (sign in / create account) -->
@@ -964,9 +992,11 @@ header{border-bottom:1px solid var(--line)}
         <button data-v="myitems" onclick="showView('myitems')">My Items</button>
         <button data-v="myrepairs" id="navMyRepairs" onclick="showView('myrepairs')" style="display:none">My Repairs</button>
       </nav>
-      <button class="va-switch" id="vaSwitch" onclick="toggleViewAsUser()" style="display:none" title="Toggle between admin and a preview of the regular user view">
-        <span class="va-dot"></span><span class="va-txt">Admin view</span>
-      </button>
+      <div class="va-switch" id="vaSwitch" style="display:none" role="group" aria-label="Preview as" title="Switch which view you're previewing">
+        <button data-mode="admin" onclick="setViewMode('admin')">Admin</button>
+        <button data-mode="fixer" onclick="setViewMode('fixer')">Fixer</button>
+        <button data-mode="user" onclick="setViewMode('user')">User</button>
+      </div>
       <div class="user-wrap">
         <button class="user-chip" id="userChip" onclick="toggleUserMenu(event)" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
           <span class="av" id="userAv" style="background:#E07D2B">?</span>
@@ -1018,7 +1048,7 @@ header{border-bottom:1px solid var(--line)}
     <section class="view" id="view-fixers">
       <div class="page-head">
         <div class="leyebrow">The crew</div>
-        <h2>Meet the Fixers</h2>
+        <h2>Meet the crew making it all Fixibl!</h2>
         <p>The crew behind the bench. Submit under the right category and the right fixer will grab it.</p>
         <div class="ruler"></div>
       </div>
@@ -1053,7 +1083,7 @@ header{border-bottom:1px solid var(--line)}
 
   </div>
 </main>
-<footer>Fixibl · Repair, don't replace · <span id="syncNote">data saves to this browser. Sign in on the same device to see your items</span></footer>
+<footer>Fixibl · Think Fixibly · <span id="syncNote">data saves to this browser. Sign in on the same device to see your items</span></footer>
 </div>
 
 <!-- FIX REQUEST PAGE (full page, opened from the landing CTA and the app board) -->
@@ -1464,8 +1494,8 @@ function isAdmin(){
 // "View as user" lets an admin preview the regular customer experience.
 // When ON, every admin-only control is hidden and club powers are suspended,
 // so the admin sees exactly what a normal submitter sees.
-let viewAsUser=false;
-function actingAsAdmin(){ return isAdmin() && !viewAsUser; }
+let adminViewMode='admin'; // 'admin' | 'fixer' | 'user' — which view an admin is previewing
+function actingAsAdmin(){ return isAdmin() && adminViewMode==='admin'; }
 
 /* =========================================================
    AI DIAGNOSTICS FRAMEWORK
@@ -1627,7 +1657,7 @@ function deriveRole(){
 function syncUserRole(){
   if(!currentUser) return;
   const next=deriveRole();
-  const nextClub=(next==='fixer'||next==='admin') && !viewAsUser;
+  const nextClub=(next==='admin') ? (adminViewMode!=='user') : (next==='fixer');
   if(next===currentUser.role && nextClub===clubMode) return;
   currentUser.role=next;
   clubMode=nextClub;
@@ -2145,10 +2175,11 @@ function renderModeUI(){
   // Home page hint — explains how club access works now
   const hint=document.getElementById('modeHint');
   if(hint){
-    if(admin)            hint.innerHTML='Signed in as <b>admin</b>. You can manage fixers, listings, and claim repairs.';
-    else if(clubMode)    hint.innerHTML='Signed in as a <b>fixer</b>. You can claim repairs and chat with submitters.';
-    else if(isAdmin())   hint.innerHTML='Previewing the <b>user view</b>. Use the switch up top to return to admin.';
-    else                 hint.innerHTML='Submit broken items and let the Fixibl crew take it from there.';
+    if(admin)                      hint.innerHTML='Signed in as <b>admin</b>. You can manage fixers, listings, and claim repairs.';
+    else if(isAdmin()&&clubMode)   hint.innerHTML='Previewing the <b>fixer view</b>. Use the switch up top to change it.';
+    else if(clubMode)              hint.innerHTML='Signed in as a <b>fixer</b>. You can claim repairs and chat with submitters.';
+    else if(isAdmin())             hint.innerHTML='Previewing the <b>user view</b>. Use the switch up top to change it.';
+    else                           hint.innerHTML='Submit broken items and let the Fixibl crew take it from there.';
   }
   // Fixers tab hint
   const fixHint=document.getElementById('fixHint');
@@ -2173,26 +2204,25 @@ function renderModeUI(){
   // If clubMode dropped and we're sitting on My Repairs, bounce home
   if(!clubMode && document.querySelector('#view-myrepairs.on')) showView('home');
 }
-// Reflect the current preview state on the header switch.
+// Reflect the current preview mode on the header segmented switch.
 function updateViewAsUserUI(){
   const sw=document.getElementById('vaSwitch');
   if(!sw)return;
   sw.style.display=isAdmin()?'inline-flex':'none';
-  sw.classList.toggle('on',!viewAsUser);            // "on" = admin powers active
-  const txt=sw.querySelector('.va-txt');
-  if(txt) txt.textContent=viewAsUser?'User view':'Admin view';
+  sw.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.mode===adminViewMode));
 }
-// Admin toggle: preview the regular customer experience without changing the saved role.
-function toggleViewAsUser(){
+// Admin: switch which view is previewed (admin / fixer / user) without changing the saved role.
+function setViewMode(mode){
   if(!isAdmin())return;
-  viewAsUser=!viewAsUser;
-  clubMode=(currentUser && (currentUser.role==='fixer'||currentUser.role==='admin')) && !viewAsUser;
+  if(!['admin','fixer','user'].includes(mode))return;
+  adminViewMode=mode;
+  clubMode=(mode!=='user');
   renderModeUI();
   renderItems();
   if(document.querySelector('#view-fixers.on'))    renderFixers();
   if(document.querySelector('#view-myitems.on'))   renderMyItems();
   if(document.querySelector('#view-myrepairs.on')) renderMyRepairs();
-  toast(viewAsUser?'Previewing the user view':'Back to admin view');
+  toast(mode==='admin'?'Admin view':mode==='fixer'?'Previewing fixer view':'Previewing user view');
 }
 function setFilter(f){filter=f;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));renderItems();}
 function esc(s){return (s||'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
@@ -2739,7 +2769,7 @@ Object.assign(window,{
   openClaim, confirmClaim, markReady, reopen, verifyReceipt,
   openFixer, saveFixer, removeFixer,
   toggleChat, sendMsg, toggleUserMenu, startSignup,
-  toggleViewAsUser, adminToggleDelist, adminDeleteItem, adminSetCategory
+  setViewMode, adminToggleDelist, adminDeleteItem, adminSetCategory
 });
 
 // Boot is driven by onAuthStateChanged above — nothing to do here.
