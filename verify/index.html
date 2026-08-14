@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Verify your email · Fixibl</title>
+<title>Fixibl account</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,19 +38,30 @@ body{
 .logo-fallback{width:56px;height:56px;margin:0 auto 16px;display:none}
 h1{font-family:var(--font-display);font-weight:800;font-size:1.55rem;letter-spacing:-.02em;line-height:1.15;margin-bottom:8px}
 p{color:var(--muted);font-size:.98rem;line-height:1.55;margin-bottom:6px}
-.icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:4px auto 14px;color:#fff}
+p b{color:var(--ink)}
+.icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.9rem;margin:4px auto 14px;color:#fff}
 .icon.ok{background:var(--green);box-shadow:0 8px 22px -8px rgba(78,141,91,.6)}
 .icon.bad{background:var(--danger);box-shadow:0 8px 22px -8px rgba(178,58,38,.55)}
+.icon.key{background:var(--navy);box-shadow:0 8px 22px -8px rgba(30,58,82,.6)}
 .spinner{width:40px;height:40px;border:4px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite;margin:6px auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
   font-family:var(--font-display);font-weight:700;font-size:1rem;
   text-decoration:none;cursor:pointer;border:none;
   background:var(--navy);color:#fff;padding:13px 22px;border-radius:11px;margin-top:18px;
   box-shadow:0 9px 20px -8px rgba(30,58,82,.65);transition:.16s;
 }
 .btn:hover{background:#16293b;transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.field{margin-top:12px;text-align:left}
+.field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px}
+.field input{
+  width:100%;font-family:inherit;font-size:.98rem;padding:12px 14px;
+  border:1.5px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);
+}
+.field input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(224,125,43,.16)}
+.err{color:var(--danger);font-size:.85rem;margin-top:10px;min-height:1.1em}
 .hidden{display:none}
 .brand{margin-top:20px;font-size:.78rem;color:var(--muted)}
 .brand b{color:var(--ink);font-family:var(--font-display);font-weight:800}
@@ -64,15 +75,15 @@ p{color:var(--muted);font-size:.98rem;line-height:1.55;margin-bottom:6px}
     <!-- Loading -->
     <div id="state-loading">
       <div class="spinner"></div>
-      <h1>Verifying your email…</h1>
-      <p>Hang tight, this only takes a second.</p>
+      <h1>One moment…</h1>
+      <p>Confirming your request.</p>
     </div>
 
-    <!-- Success -->
+    <!-- Success (generic) -->
     <div id="state-success" class="hidden">
       <div class="icon ok">✓</div>
-      <h1>Email verified!</h1>
-      <p>You're all set. Head back to Fixibl and sign in.</p>
+      <h1 id="success-title">Done!</h1>
+      <p id="success-msg"></p>
       <a class="btn" id="success-cta" href="https://www.fixibl.com">Go to Fixibl →</a>
     </div>
 
@@ -80,18 +91,34 @@ p{color:var(--muted);font-size:.98rem;line-height:1.55;margin-bottom:6px}
     <div id="state-error" class="hidden">
       <div class="icon bad">!</div>
       <h1 id="error-title">Something went wrong</h1>
-      <p id="error-msg">We couldn't verify your email.</p>
+      <p id="error-msg"></p>
       <a class="btn" href="https://www.fixibl.com">Back to Fixibl</a>
+    </div>
+
+    <!-- Password reset form -->
+    <div id="state-reset" class="hidden">
+      <div class="icon key">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+      </div>
+      <h1>Set a new password</h1>
+      <p>for <b id="reset-email"></b></p>
+      <div class="field"><label for="new-pw">New password</label><input type="password" id="new-pw" placeholder="At least 6 characters" autocomplete="new-password"></div>
+      <div class="field"><label for="new-pw2">Confirm password</label><input type="password" id="new-pw2" placeholder="Re-enter password" autocomplete="new-password"></div>
+      <div class="err" id="reset-err"></div>
+      <button class="btn" id="reset-btn" style="margin-top:8px">Update password</button>
     </div>
 
     <div class="brand"><b>Fixibl</b> · Anything is Fixibl</div>
   </div>
 
 <script type="module">
+// Static hosting (GitHub Pages) → use the Firebase CDN module URLs, NOT the
+// bundler-style "firebase/app" imports (those need a build step).
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, applyActionCode } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getAuth, applyActionCode, verifyPasswordResetCode, confirmPasswordReset
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// Same Firebase project as the site and app.
 const firebaseConfig = {
   apiKey: "AIzaSyAwFpDNSHGWQYoXbe4UWBNggFYCHJ-K-4Q",
   authDomain: "fixify-1.firebaseapp.com",
@@ -106,12 +133,18 @@ const auth = getAuth(initializeApp(firebaseConfig));
 const params  = new URLSearchParams(location.search);
 const mode    = params.get('mode');
 const oobCode = params.get('oobCode');
-const cont    = params.get('continueUrl');
+const contUrl = params.get('continueUrl') || 'https://www.fixibl.com';
 
 function show(id){
-  ['state-loading','state-success','state-error'].forEach(s=>{
+  ['state-loading','state-success','state-error','state-reset'].forEach(s=>{
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
+}
+function succeed(title, msg){
+  document.getElementById('success-title').textContent = title;
+  document.getElementById('success-msg').textContent = msg;
+  document.getElementById('success-cta').href = contUrl;
+  show('state-success');
 }
 function fail(title, msg){
   document.getElementById('error-title').textContent = title;
@@ -119,36 +152,67 @@ function fail(title, msg){
   show('state-error');
 }
 
+// Map a Firebase error to friendly copy. If `inlineEl` is given, show the
+// message there (keeps the form up); otherwise show the full error screen.
+function handleError(e, inlineEl){
+  const code = (e && e.code) || '';
+  let title = 'Something went wrong';
+  let msg   = 'Please try the link again, or request a fresh one.';
+  if(code.includes('expired-action-code')){ title='Link expired'; msg='This link has expired. Request a new one and try again.'; }
+  else if(code.includes('invalid-action-code')){ title='Link already used'; msg='This link is invalid or has already been used.'; }
+  else if(code.includes('weak-password')){ msg='Password is too weak — use at least 6 characters.'; }
+  else if(code.includes('user-disabled')){ title='Account disabled'; msg='Contact support@fixibl.com if you think this is a mistake.'; }
+  else if(code.includes('user-not-found')){ title='Account not found'; msg='This account may have been removed.'; }
+  if(inlineEl){ inlineEl.textContent = msg; return; }
+  fail(title, msg);
+}
+
 async function run(){
   if(!oobCode){
-    fail('Invalid link', 'This link is missing its verification code. Please open the most recent link from your email.');
-    return;
-  }
-  // Firebase points all email actions at this URL. We handle email verification;
-  // these modes are all confirmed with applyActionCode.
-  if(mode && !['verifyEmail','recoverEmail','verifyAndChangeEmail'].includes(mode)){
-    fail("Can't handle this link here", 'This link isn’t an email-verification link. If you were resetting a password, use the link from that email instead.');
+    fail('Invalid link', 'This link is missing its code. Please open the most recent link from your email.');
     return;
   }
   try{
-    await applyActionCode(auth, oobCode);
-    document.getElementById('success-cta').href = cont || 'https://www.fixibl.com';
-    show('state-success');
-  }catch(e){
-    const code = (e && e.code) || '';
-    if(code.includes('expired-action-code')){
-      fail('Link expired', 'This verification link has expired. Sign in to Fixibl and we’ll send you a fresh one.');
-    }else if(code.includes('invalid-action-code')){
-      fail('Link already used', 'This link is invalid or has already been used. If your email is already verified, just sign in.');
-    }else if(code.includes('user-disabled')){
-      fail('Account disabled', 'This account has been disabled. Contact support@fixibl.com if you think this is a mistake.');
-    }else if(code.includes('user-not-found')){
-      fail('Account not found', 'We couldn’t find this account. It may have been removed.');
-    }else{
-      fail('Something went wrong', 'We couldn’t verify your email. Please try the link again, or sign in to request a new one.');
+    if(mode === 'resetPassword'){
+      // Validate the code and reveal the account email, then show the form.
+      const email = await verifyPasswordResetCode(auth, oobCode);
+      document.getElementById('reset-email').textContent = email;
+      show('state-reset');
+      return;
     }
+    if(mode === 'recoverEmail'){
+      await applyActionCode(auth, oobCode);
+      succeed('Email change reverted', 'Your account email has been restored. For safety, consider resetting your password.');
+      return;
+    }
+    if(mode === 'verifyEmail' || mode === 'verifyAndChangeEmail'){
+      await applyActionCode(auth, oobCode);
+      succeed('Email verified!', "You're all set. Head back to Fixibl and sign in.");
+      return;
+    }
+    fail("Can't handle this link", 'This isn’t a recognized account request. Please use the most recent link from your email.');
+  }catch(e){
+    handleError(e);
   }
 }
+
+// Password-reset submit
+function submitReset(){
+  const pw  = document.getElementById('new-pw').value;
+  const pw2 = document.getElementById('new-pw2').value;
+  const err = document.getElementById('reset-err');
+  const btn = document.getElementById('reset-btn');
+  err.textContent = '';
+  if(pw.length < 6){ err.textContent = 'Password must be at least 6 characters.'; return; }
+  if(pw !== pw2){ err.textContent = "Those passwords don't match."; return; }
+  btn.disabled = true;
+  confirmPasswordReset(auth, oobCode, pw)
+    .then(() => succeed('Password updated', 'You can now sign in with your new password.'))
+    .catch(e => { btn.disabled = false; handleError(e, err); });
+}
+document.getElementById('reset-btn').addEventListener('click', submitReset);
+document.getElementById('new-pw2').addEventListener('keydown', e => { if(e.key === 'Enter') submitReset(); });
+
 run();
 </script>
 </body></html>
