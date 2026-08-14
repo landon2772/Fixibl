@@ -1463,7 +1463,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
   getAuth, onAuthStateChanged,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, signInAnonymously,
   signOut as fbSignOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1511,6 +1511,25 @@ async function sendCustomVerificationEmail(user) {
     } catch (_) {}
 
     throw new Error(message);
+  }
+
+  return response.json();
+}
+
+async function sendCustomPasswordResetEmail(email) {
+  const response = await fetch(
+    "https://us-central1-fixify-1.cloudfunctions.net/sendPasswordResetEmail",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({email})
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Unable to send password reset email.");
   }
 
   return response.json();
@@ -1746,20 +1765,37 @@ async function signIn(){
 }
 
 async function forgotPassword(){
-  const email=document.getElementById('si-email').value.trim().toLowerCase();
+  const email=document.getElementById('si-email')
+    .value.trim()
+    .toLowerCase();
+
   const err=document.getElementById('si-err');
+
   err.style.color='';
-  if(!email){ err.textContent='Enter your email above first, then tap “Forgot password?”.'; return; }
-  if(!validEmail(email)){ err.textContent='That doesn\'t look like a valid email.'; return; }
+
+  if(!email){
+    err.textContent=
+      'Enter your email above first, then tap “Forgot password?”.';
+    return;
+  }
+
+  if(!validEmail(email)){
+    err.textContent='That doesn\'t look like a valid email.';
+    return;
+  }
+
   try{
-    await sendPasswordResetEmail(auth, email);
+    await sendCustomPasswordResetEmail(email);
+
     err.style.color='#2f7d4f';
-    err.textContent='Password reset link sent to '+email+'. Check your inbox.';
+    err.textContent=
+      'If an account exists for '+email+
+      ', a reset link is on its way. Check your inbox.';
   }catch(e){
-    const c=(e&&e.code)||'';
-    // Don't reveal whether an account exists.
-    if(c.includes('user-not-found')){ err.style.color='#2f7d4f'; err.textContent='If an account exists for '+email+', a reset link is on its way.'; }
-    else err.textContent=authErrMsg(e);
+    console.error('Password reset email failed:', e);
+
+    err.textContent=
+      'We couldn\'t send the reset email right now. Please try again.';
   }
 }
 
