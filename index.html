@@ -57,6 +57,8 @@ h1,h2,h3,.slab{font-family:var(--font-ui)}
 #boot-screen{position:fixed;inset:0;z-index:300;background:var(--kraft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 #boot-screen img{width:64px;height:64px;border-radius:50%}
 #boot-screen .sp{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite}
+#verify-screen{position:fixed;inset:0;z-index:250;background:var(--kraft);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+#verify-screen .sp{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite;margin:6px auto 18px}
 
 /* ===== LANDING (signed-out marketing page) ===== */
 #auth-screen{
@@ -744,6 +746,19 @@ header{border-bottom:1px solid var(--line)}
 
 <!-- BOOT SCREEN — shown until Firebase decides signed-in vs signed-out -->
 <div id="boot-screen"><img src="logo.png?v=2" alt="Fixibl"><div class="sp"></div></div>
+
+<!-- EMAIL VERIFICATION WAITING SCREEN — polls until verified, then continues automatically -->
+<div id="verify-screen" style="display:none">
+  <div class="auth-card" style="text-align:center;max-width:420px">
+    <div class="sp"></div>
+    <h2 style="font-family:var(--font-display);font-weight:800;font-size:1.5rem;letter-spacing:-.02em;margin-bottom:8px">Verify your email</h2>
+    <p style="color:var(--muted);line-height:1.55;margin-bottom:6px">We sent a verification link to <b id="verify-email" style="color:var(--ink)"></b>.</p>
+    <p style="color:var(--muted);line-height:1.55;margin-bottom:16px">Open it and this page will continue automatically — no need to sign in again.</p>
+    <div class="auth-err" id="verify-msg" style="min-height:1.2em"></div>
+    <button class="auth-btn" onclick="resendVerify()">Resend email</button>
+    <div class="auth-switch" style="margin-top:16px">Wrong account? <b onclick="verifySignOut()">Sign out</b></div>
+  </div>
+</div>
 <script>setTimeout(function(){var b=document.getElementById('boot-screen');if(b)b.style.display='none';},6000)</script>
 <noscript><style>#boot-screen{display:none}.rv{opacity:1;transform:none}</style></noscript>
 
@@ -1743,24 +1758,9 @@ async function signIn(){
   err.textContent='';
   if(!email||!pw){err.textContent='Fill in email and password.';return;}
   try{
-    const cred=await signInWithEmailAndPassword(auth,email,pw);
-    if(!cred.user.emailVerified){
-      try{
-        await sendCustomVerificationEmail(cred.user);
-      }catch(e){
-        console.error("Custom verification email failed:", e);
-        await fbSignOut(auth);
-        err.style.color='';
-        err.textContent='Please verify your email first. We could not send a new verification link right now.';
-        return;
-      }
-
-  await fbSignOut(auth);
-  err.style.color='';
-  err.textContent='Please verify your email first. We just sent a new link to '+email+'.';
-  return;
-}
-    // verified → onAuthStateChanged will boot the app
+    await signInWithEmailAndPassword(auth,email,pw);
+    // onAuthStateChanged routes to the verify waiting screen if the email isn't
+    // verified yet, or into the app if it is.
   }catch(e){ err.style.color=''; err.textContent=authErrMsg(e); }
 }
 
@@ -1817,17 +1817,9 @@ async function signUp(){
       await updateProfile(cred.user,{displayName:name});
     }catch(_){}
 
-    try{
-      await sendCustomVerificationEmail(cred.user);
-    }catch(e){
-      console.error("Custom verification email failed:", e);
-      throw new Error("Account created, but we couldn't send the verification email. Please try signing in again to resend it.");
-    }
-    // The auth-state guard signs the (still-unverified) session out; prompt them
-    // to verify and come back. The profile doc is created on first verified sign-in.
-    const si=document.getElementById('si-err');
-    if(si){ si.style.color='#2f7d4f'; si.textContent='Account created! Check your email for a verification link, then sign in.'; }
-    switchAuthTab('signin');
+    try{ await sendCustomVerificationEmail(cred.user); }catch(e){ console.error("Custom verification email failed:", e); }
+    // onAuthStateChanged shows the verify waiting screen and polls until the
+    // email is verified. The profile doc is created once verified.
   }catch(e){
     pendingProfile=null;
     err.textContent=authErrMsg(e);
@@ -1900,39 +1892,76 @@ function startSignup(){
 // Hide the boot spinner once we know whether the user is signed in.
 function hideBoot(){const b=document.getElementById('boot-screen');if(b)b.style.display='none';}
 
+// Boot a verified, signed-in account into the app.
+async function enterApp(fbUser){
+  try{
+    const opts=pendingProfile||{};
+    pendingProfile=null;
+    const profile=await ensureUserDoc(fbUser, opts);
+    currentUser={id:fbUser.uid,name:profile.name,email:fbUser.email||profile.email||'',role:'customer',color:profile.color||'#E07D2B'};
+    if(ADMIN_EMAILS.includes((currentUser.email||'').toLowerCase())) currentUser.role='admin';
+    clubMode=(currentUser.role==='fixer'||currentUser.role==='admin');
+    wasSignedIn=true;
+    bootApp();
+  }catch(e){ console.error(e); toast('Could not load your profile: '+authErrMsg(e)); }
+  hideBoot();
+}
+
+/* ---- Email-verification waiting screen ----
+   Keep the unverified user signed in, show a "check your email" screen, and poll
+   every few seconds. The moment Firebase reports the email verified, continue
+   into the app — no need to sign in again. */
+let verifyPoll=null;
+function showVerifyScreen(email){
+  const vs=document.getElementById('verify-screen'); if(!vs)return;
+  const em=document.getElementById('verify-email'); if(em)em.textContent=email||'your email';
+  const msg=document.getElementById('verify-msg'); if(msg)msg.textContent='';
+  vs.style.display='flex';
+  const as=document.getElementById('auth-screen'); if(as)as.style.display='none';
+  const ap=document.getElementById('app'); if(ap)ap.style.display='none';
+}
+function hideVerifyScreen(){ const vs=document.getElementById('verify-screen'); if(vs)vs.style.display='none'; }
+function startVerifyPolling(){
+  stopVerifyPolling();
+  verifyPoll=setInterval(async ()=>{
+    const u=auth.currentUser;
+    if(!u){ stopVerifyPolling(); return; }
+    try{ await u.reload(); }catch(_){}
+    if(auth.currentUser && auth.currentUser.emailVerified){
+      stopVerifyPolling(); hideVerifyScreen(); await enterApp(auth.currentUser);
+    }
+  }, 3000);
+}
+function stopVerifyPolling(){ if(verifyPoll){ clearInterval(verifyPoll); verifyPoll=null; } }
+async function resendVerify(){
+  const u=auth.currentUser; const msg=document.getElementById('verify-msg');
+  if(!u)return;
+  if(msg){ msg.style.color=''; msg.textContent='Sending…'; }
+  try{ await sendCustomVerificationEmail(u); if(msg){ msg.style.color='#2f7d4f'; msg.textContent='Verification link re-sent. Check your inbox (and spam).'; } }
+  catch(e){ if(msg){ msg.style.color=''; msg.textContent='Could not resend right now. Try again in a minute.'; } }
+}
+async function verifySignOut(){ stopVerifyPolling(); hideVerifyScreen(); try{ await fbSignOut(auth); }catch(_){} }
+
 // Central auth listener — drives the auth screen vs. app screen
 onAuthStateChanged(auth, async (fbUser)=>{
   if(fbUser && !fbUser.isAnonymous){
-    // Email/password accounts must verify their email before they can use the
-    // app. (Google accounts are always verified; anonymous sessions are handled
-    // below.) Sign the unverified session out and leave them on the sign-in
-    // screen; signIn()/signUp() explain what to do next.
+    // Email/password accounts must verify before entering the app. Instead of
+    // signing them out, show a waiting screen that auto-continues the moment the
+    // email is verified. (Google accounts are always verified.)
     if(!fbUser.emailVerified){
       hideBoot();
-      try{ await fbSignOut(auth); }catch(_){}
+      showVerifyScreen(fbUser.email);
+      startVerifyPolling();
       return;
     }
-    try{
-      // Consume any pending profile info from signUp/googleSignIn so the right
-      // name lands in Firestore on first write.
-      const opts=pendingProfile||{};
-      pendingProfile=null;
-      const profile=await ensureUserDoc(fbUser, opts);
-      currentUser={id:fbUser.uid,name:profile.name,email:fbUser.email||profile.email||'',role:'customer',color:profile.color||'#E07D2B'};
-      // Derive role from ADMIN_EMAILS (fixers list will refine this once the listener fires)
-      if(ADMIN_EMAILS.includes((currentUser.email||'').toLowerCase())) currentUser.role='admin';
-      clubMode=(currentUser.role==='fixer'||currentUser.role==='admin');
-      wasSignedIn=true;
-      bootApp();
-    }catch(e){
-      console.error(e);
-      toast('Could not load your profile: '+authErrMsg(e));
-    }
-    hideBoot();
+    hideVerifyScreen();
+    stopVerifyPolling();
+    await enterApp(fbUser);
   }else if(fbUser){
     // Anonymous session: a public visitor whose fix requests live on this
     // device. No account UI — just their items and chats.
     hideBoot();
+    stopVerifyPolling(); hideVerifyScreen();
     window.appMode=false;
     window.__signedIn=false;
     if(window.syncProfileMenus)window.syncProfileMenus();
@@ -1946,6 +1975,7 @@ onAuthStateChanged(auth, async (fbUser)=>{
     startCustomerListeners();
   }else{
     hideBoot();
+    stopVerifyPolling(); hideVerifyScreen();
     // Signed out — clear listeners and show the public site
     if(unsubItems){unsubItems();unsubItems=null;}
     if(unsubFixers){unsubFixers();unsubFixers=null;}
@@ -2909,7 +2939,7 @@ document.getElementById('su-pw').addEventListener('keydown',e=>{if(e.key==='Ente
    scope — functions are NOT global by default.)
    ========================================================= */
 Object.assign(window,{
-  switchAuthTab, signIn, signUp, googleSignIn, signOut, togglePw, forgotPassword,
+  switchAuthTab, signIn, signUp, googleSignIn, signOut, togglePw, forgotPassword, resendVerify, verifySignOut,
   showView, setFilter, renderItems, gotoChat,
   openSubmit, openApp, closeApp, skipAI, startAI, setSubStep, pickOpt, submitAnswers,
   backFromContact, submitItem, toContactStep, goToMyItems, renderMyItems, close_,
