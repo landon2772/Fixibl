@@ -1463,7 +1463,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
   getAuth, onAuthStateChanged,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail,
   GoogleAuthProvider, signInWithPopup, signInAnonymously,
   signOut as fbSignOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1487,6 +1487,34 @@ const fbApp = initializeApp(firebaseConfig);
 const auth  = getAuth(fbApp);
 const db    = getFirestore(fbApp);
 const googleProvider = new GoogleAuthProvider();
+
+async function sendCustomVerificationEmail(user) {
+  const idToken = await user.getIdToken();
+
+  const response = await fetch(
+    "https://us-central1-fixify-1.cloudfunctions.net/sendVerificationEmail",
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${idToken}`,
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  if (!response.ok) {
+    let message = "Unable to send verification email.";
+
+    try {
+      const data = await response.json();
+      if (data.error) message = data.error;
+    } catch (_) {}
+
+    throw new Error(message);
+  }
+
+  return response.json();
+}
 
 // Firebase Analytics — guarded by isSupported() so it never throws in browsers
 // or private modes where it isn't available (analytics is non-essential).
@@ -1698,11 +1726,21 @@ async function signIn(){
   try{
     const cred=await signInWithEmailAndPassword(auth,email,pw);
     if(!cred.user.emailVerified){
-      try{ await sendEmailVerification(cred.user); }catch(_){}
-      await fbSignOut(auth);
-      err.style.color=''; err.textContent='Please verify your email first. We just sent a new link to '+email+'.';
-      return;
-    }
+      try{
+        await sendCustomVerificationEmail(cred.user);
+      }catch(e){
+        console.error("Custom verification email failed:", e);
+        await fbSignOut(auth);
+        err.style.color='';
+        err.textContent='Please verify your email first. We could not send a new verification link right now.';
+        return;
+      }
+
+  await fbSignOut(auth);
+  err.style.color='';
+  err.textContent='Please verify your email first. We just sent a new link to '+email+'.';
+  return;
+}
     // verified → onAuthStateChanged will boot the app
   }catch(e){ err.style.color=''; err.textContent=authErrMsg(e); }
 }
@@ -1738,8 +1776,17 @@ async function signUp(){
   pendingProfile={name, role:selectedRole};
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pw);
-    try{ await updateProfile(cred.user,{displayName:name}); }catch(_){}
-    try{ await sendEmailVerification(cred.user); }catch(_){}
+
+    try{
+      await updateProfile(cred.user,{displayName:name});
+    }catch(_){}
+
+    try{
+      await sendCustomVerificationEmail(cred.user);
+    }catch(e){
+      console.error("Custom verification email failed:", e);
+      throw new Error("Account created, but we couldn't send the verification email. Please try signing in again to resend it.");
+    }
     // The auth-state guard signs the (still-unverified) session out; prompt them
     // to verify and come back. The profile doc is created on first verified sign-in.
     const si=document.getElementById('si-err');
