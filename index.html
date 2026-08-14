@@ -798,7 +798,7 @@ header{border-bottom:1px solid var(--line)}
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Start a fix request</button>
       <a class="btn btn-ghost btn-lg" href="#how">See how it works</a>
     </div>
-    <div class="lhero-note rv" style="transition-delay:.24s">Fair bids · No account needed · Electronics, bikes, toys &amp; more</div>
+    <div class="lhero-note rv" style="transition-delay:.24s">Fair bids · Electronics, bikes, toys &amp; more</div>
     <div class="scrollcue rv" style="transition-delay:.34s" aria-hidden="true"><span></span></div>
   </div>
 
@@ -825,7 +825,7 @@ header{border-bottom:1px solid var(--line)}
       <p class="lede">Fixibl has a team of experienced fixers who will fix your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Every repair starts with a bid from your fixer, and it will never cost more than replacing the item.</p>
     </div>
     <div class="lsteps">
-      <div class="step-card rv"><span class="num">Step 1</span><h3>Tell us what's broken</h3><p>Fill out a quick fix request: name the item, add a photo, describe what's wrong, and leave your contact info. About two minutes, no account needed.</p></div>
+      <div class="step-card rv"><span class="num">Step 1</span><h3>Tell us what's broken</h3><p>Sign in, then fill out a quick fix request: name the item, add a photo, describe what's wrong, and leave your contact info. About two minutes.</p></div>
       <div class="step-card rv" style="transition-delay:.08s"><span class="num">Step 2</span><h3>A fixer takes it on</h3><p>One of our fixers claims your request, sends you a bid and timeline, and arranges drop-off with you in the built-in chat.</p></div>
       <div class="step-card rv" style="transition-delay:.16s"><span class="num">Step 3</span><h3>Pick it up fixed</h3><p>You'll get a message the moment it's ready. Swing by, grab your item, and get back to using it.</p></div>
     </div>
@@ -878,7 +878,7 @@ header{border-bottom:1px solid var(--line)}
       <div class="lcta-sub">Find out how to get it fixed.</div>
       <p>First, fill out a fix request: tell us what's broken, snap a photo, and send it in. A fixer will claim it, message you with a bid and timeline, and arrange drop-off. Then all that's left is picking it up fixed.</p>
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Fill out a fix request</button>
-      <div class="lcta-note">About 2 minutes · No account needed · You'll get a bid before any work starts</div>
+      <div class="lcta-note">About 2 minutes · Sign in to start · You'll get a bid before any work starts</div>
     </div>
   </section>
 
@@ -927,7 +927,7 @@ header{border-bottom:1px solid var(--line)}
       <svg viewBox="0 0 48 48" class="auth-logo-fallback" style="display: block;"><rect x="2" y="2" width="44" height="44" rx="12" fill="#1E3A52"></rect><polygon points="24,13 32.7,18 32.7,28 24,33 15.3,28 15.3,18" fill="none" stroke="#FCFAF3" stroke-width="3" stroke-linejoin="round"></polygon><circle cx="24" cy="23" r="4.3" fill="#FCFAF3"></circle><path d="M24 13c.1-3.6 2.7-6.2 6.4-6.5-.1 3.7-2.7 6.3-6.4 6.5z" fill="#6BBE85"></path><circle cx="33" cy="9.6" r="1.7" fill="#E07D2B"></circle></svg>
       <span class="name">Fixibl</span>
     </div>
-    <div class="auth-tagline">Fixer portal. Sign in with your fixer account to see and claim requests.</div>
+    <div class="auth-tagline">Sign in or create an account to submit a fix request — or to claim repairs if you're on the crew.</div>
     <div class="auth-tabs">
       <button id="tab-signin" class="on" onclick="switchAuthTab('signin')">Sign in</button>
       <button id="tab-signup" onclick="switchAuthTab('signup')">Create account</button>
@@ -1248,13 +1248,12 @@ function closeAuth(){
   window.__authReturnFocus=null;
   if(rf&&rf.focus&&document.contains(rf)){try{rf.focus();}catch(_){}}
 }
-/* "Start a fix request" — no account needed, straight into the form. */
+/* "Start a fix request" — requires a signed-in account (needed for Firebase).
+   If the visitor isn't signed in, open the sign-in / create-account menu. */
 function startFixRequest(){
   closeMyItems();
+  if(!window.__signedIn){ if(window.openAuth)openAuth('signup'); return; }
   if(window.openSubmit){window.openSubmit();return;}
-  // Module still loading: the form's first step is static HTML, open it anyway
-  var ov=document.getElementById('submitOverlay');
-  if(ov)ov.classList.add('show');
 }
 /* Public My items page (per-device requests + chat).
    Signed-in accounts get theirs inside the fixer workspace instead. */
@@ -1445,7 +1444,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
   getAuth, onAuthStateChanged,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification,
   GoogleAuthProvider, signInWithPopup, signInAnonymously,
   signOut as fbSignOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1678,9 +1677,15 @@ async function signIn(){
   err.textContent='';
   if(!email||!pw){err.textContent='Fill in email and password.';return;}
   try{
-    await signInWithEmailAndPassword(auth,email,pw);
-    // onAuthStateChanged will boot the app
-  }catch(e){ err.textContent=authErrMsg(e); }
+    const cred=await signInWithEmailAndPassword(auth,email,pw);
+    if(!cred.user.emailVerified){
+      try{ await sendEmailVerification(cred.user); }catch(_){}
+      await fbSignOut(auth);
+      err.style.color=''; err.textContent='Please verify your email first. We just sent a new link to '+email+'.';
+      return;
+    }
+    // verified → onAuthStateChanged will boot the app
+  }catch(e){ err.style.color=''; err.textContent=authErrMsg(e); }
 }
 
 async function signUp(){
@@ -1690,14 +1695,19 @@ async function signUp(){
   const err=document.getElementById('su-err');
   err.textContent='';
   if(!name||!email||!pw){err.textContent='Fill in all fields.';return;}
+  if(!validEmail(email)){err.textContent='Please enter a valid email address.';return;}
   if(pw.length<6){err.textContent='Password must be at least 6 characters.';return;}
   // Set the latch BEFORE the auth call — onAuthStateChanged may fire before our awaits return.
   pendingProfile={name, role:selectedRole};
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pw);
     try{ await updateProfile(cred.user,{displayName:name}); }catch(_){}
-    // Belt and suspenders — re-assert the profile after auth completes.
-    await ensureUserDoc(cred.user,{name,role:selectedRole});
+    try{ await sendEmailVerification(cred.user); }catch(_){}
+    // The auth-state guard signs the (still-unverified) session out; prompt them
+    // to verify and come back. The profile doc is created on first verified sign-in.
+    const si=document.getElementById('si-err');
+    if(si){ si.style.color='#2f7d4f'; si.textContent='Account created! Check your email for a verification link, then sign in.'; }
+    switchAuthTab('signin');
   }catch(e){
     pendingProfile=null;
     err.textContent=authErrMsg(e);
@@ -1773,6 +1783,15 @@ function hideBoot(){const b=document.getElementById('boot-screen');if(b)b.style.
 // Central auth listener — drives the auth screen vs. app screen
 onAuthStateChanged(auth, async (fbUser)=>{
   if(fbUser && !fbUser.isAnonymous){
+    // Email/password accounts must verify their email before they can use the
+    // app. (Google accounts are always verified; anonymous sessions are handled
+    // below.) Sign the unverified session out and leave them on the sign-in
+    // screen; signIn()/signUp() explain what to do next.
+    if(!fbUser.emailVerified){
+      hideBoot();
+      try{ await fbSignOut(auth); }catch(_){}
+      return;
+    }
     try{
       // Consume any pending profile info from signUp/googleSignIn so the right
       // name lands in Firestore on first write.
@@ -2516,6 +2535,8 @@ function renderFixers(){
    SUBMIT (multi-step + AI)
    ========================================================= */
 function openSubmit(){
+  // Creating a listing requires a signed-in account — open sign-in if needed.
+  if(!auth.currentUser || auth.currentUser.isAnonymous){ if(window.openAuth)window.openAuth('signup'); return; }
   ['s-name','s-prob','s-first','s-last','s-email','s-phone'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ['s-err','s-err2','s-err3'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='';});
   // Returning visitor: prefill their contact details from last time
@@ -2594,13 +2615,9 @@ async function submitItem(){
   if(phone.replace(/\D/g,'').length<7){err.textContent='That phone number looks too short.';return;}
   err.textContent='';
   const name=val('s-name'),prob=val('s-prob');
-  // Invisible per-browser session: keeps this visitor's items and chats
-  // linked to their device with no account needed.
-  if(!auth.currentUser){
-    try{ await signInAnonymously(auth); }
-    catch(e){ console.error(e); err.textContent='Could not reach Fixibl right now. Please try again in a minute.'; return; }
-  }
+  // A signed-in account is required to create a listing.
   const me=auth.currentUser;
+  if(!me || me.isAnonymous){ err.textContent='Please sign in to submit a fix request.'; if(window.openAuth)window.openAuth('signin'); return; }
   const displayName=first+' '+(last.trim().charAt(0)||'').toUpperCase()+'.';
   try{
     localStorage.setItem('fixify:name',displayName);

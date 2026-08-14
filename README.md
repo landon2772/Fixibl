@@ -1,7 +1,7 @@
 # Fixibl 🦫
 
 **Anything is Fixibl.** Fixibl is a repair service site: send a fix
-request (no account needed), a fixer claims it and sends you a bid, you chat
+request (sign in first), a fixer claims it and sends you a bid, you chat
 until it's ready, then pick it up. Fixers work from a hidden portal at
 `/fixer`.
 
