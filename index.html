@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Fixibl - Drop off your broken items. Pick them up fixed.</title>
-<meta name="description" content="Fixibl is a team of experienced fixers who repair your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Fair bids, never more than the cost of a replacement. Drop off your broken items. Pick them up fixed.">
+<meta name="description" content="Fixibl is a team of experienced fixers who repair your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Completely free — a community repair team. Drop off your broken items. Pick them up fixed.">
 <meta name="theme-color" content="#2F5A41">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/icon-48.png">
@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:title" content="Fixibl - Drop off your broken items. Pick them up fixed.">
-<meta property="og:description" content="A team of experienced fixers repairs your electronics, appliances, clothing, bikes, jewelry, computers, toys, and more. Fair bids, never more than replacing it. Anything is Fixibl.">
+<meta property="og:description" content="A team of experienced fixers repairs your electronics, appliances, clothing, bikes, jewelry, computers, toys, and more. Completely free — a community repair team. Anything is Fixibl.">
 <meta property="og:image" content="https://www.fixifyit.org/logo.png">
 <meta property="og:url" content="https://www.fixifyit.org/">
 <meta property="og:type" content="website">
@@ -355,6 +355,9 @@ a.btn{text-decoration:none}
 .auth-switch{text-align:center;margin-top:16px;font-size:.88rem;color:var(--muted)}
 .auth-switch b{color:var(--navy);cursor:pointer;font-weight:700}
 .auth-switch b:hover{text-decoration:underline}
+.auth-forgot{text-align:right;margin:-2px 0 8px;font-size:.84rem}
+.auth-forgot b{color:var(--navy);cursor:pointer;font-weight:700}
+.auth-forgot b:hover{text-decoration:underline}
 
 /* ===== APP (fixer workspace) — a full page over the public site ===== */
 #app{
@@ -765,6 +768,7 @@ header{border-bottom:1px solid var(--line)}
       <nav class="lnav-links" aria-label="Homepage sections">
         <a href="#how">How it works</a>
         <a href="#what">What we fix</a>
+        <a href="#donate">Donate</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="lnav-cta">
@@ -793,12 +797,12 @@ header{border-bottom:1px solid var(--line)}
     </div>
     <div class="lhero-badge rv"><img src="logo.png?v=2" alt=""><span>Fixibl · Anything is Fixibl</span></div>
     <h1 class="rv"><span class="line"><span>Drop off your broken items.</span></span><span class="line"><span>Pick them up <span class="swash">fixed.<svg viewBox="0 0 200 14" aria-hidden="true"><path d="M4 10.5 C 58 3.5, 142 3.5, 196 8.5" pathLength="220"></path></svg></span></span></span></h1>
-    <p class="lhero-sub rv" style="transition-delay:.12s">Fixibl is a team of experienced fixers who bring broken things back to life, for a fair price. Tell us what's wrong, get a bid, and pick it up working again.</p>
+    <p class="lhero-sub rv" style="transition-delay:.12s">Fixibl is a team of experienced fixers who bring broken things back to life — for free. Tell us what's wrong, and pick it up working again.</p>
     <div class="lhero-cta rv" style="transition-delay:.18s">
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Start a fix request</button>
       <a class="btn btn-ghost btn-lg" href="#how">See how it works</a>
     </div>
-    <div class="lhero-note rv" style="transition-delay:.24s">Fair bids · Electronics, bikes, toys &amp; more</div>
+    <div class="lhero-note rv" style="transition-delay:.24s">Always free · Electronics, bikes, toys &amp; more</div>
     <div class="scrollcue rv" style="transition-delay:.34s" aria-hidden="true"><span></span></div>
   </div>
 
@@ -822,11 +826,11 @@ header{border-bottom:1px solid var(--line)}
     <div class="lsec-head rv">
       <div class="leyebrow">How it works</div>
       <h2>Broken? Totally Fixibl.</h2>
-      <p class="lede">Fixibl has a team of experienced fixers who will fix your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Every repair starts with a bid from your fixer, and it will never cost more than replacing the item.</p>
+      <p class="lede">Fixibl has a team of experienced fixers who will fix your broken electronics, small appliances, clothing, bikes, jewelry, computers, toys, and more. Every repair is completely free — we're a volunteer community service, funded entirely by donations.</p>
     </div>
     <div class="lsteps">
       <div class="step-card rv"><span class="num">Step 1</span><h3>Tell us what's broken</h3><p>Sign in, then fill out a quick fix request: name the item, add a photo, describe what's wrong, and leave your contact info. About two minutes.</p></div>
-      <div class="step-card rv" style="transition-delay:.08s"><span class="num">Step 2</span><h3>A fixer takes it on</h3><p>One of our fixers claims your request, sends you a bid and timeline, and arranges drop-off with you in the built-in chat.</p></div>
+      <div class="step-card rv" style="transition-delay:.08s"><span class="num">Step 2</span><h3>A fixer takes it on</h3><p>One of our fixers claims your request, sends you a timeline, and arranges drop-off with you in the built-in chat.</p></div>
       <div class="step-card rv" style="transition-delay:.16s"><span class="num">Step 3</span><h3>Pick it up fixed</h3><p>You'll get a message the moment it's ready. Swing by, grab your item, and get back to using it.</p></div>
     </div>
   </section>
@@ -867,18 +871,31 @@ header{border-bottom:1px solid var(--line)}
 
   <!-- statement strip -->
   <div class="lstrip rv rv-scale">
-    <div class="big">Fair bids. Real fixers.<br><em>Nothing goes to waste.</em></div>
+    <div class="big">Free repairs. Real fixers.<br><em>Nothing goes to waste.</em></div>
     <p>Every repair keeps one more thing out of the landfill, and one more favorite thing in your life.</p>
   </div>
+
+  <!-- donations -->
+  <section class="lsec" id="donate">
+    <div class="lsec-head rv">
+      <div class="leyebrow">Support Fixibl</div>
+      <h2>Keep repairs free for everyone.</h2>
+      <p class="lede">Fixibl is 100% free — no fees, no bidding, ever. We run entirely on donations, and every dollar goes right back into the service: parts, tools, and keeping things running smoothly so anyone can get their stuff fixed. If Fixibl helped you out, consider chipping in.</p>
+    </div>
+    <div class="rv" style="text-align:center;margin-top:6px">
+      <a class="btn btn-orange btn-lg" href="https://buymeacoffee.com/fixiblteam" target="_blank" rel="noopener">☕ Donate to Fixibl</a>
+      <div style="color:var(--muted);font-size:.86rem;margin-top:14px;max-width:52ch;margin-left:auto;margin-right:auto">100% of proceeds go straight back into keeping Fixibl free and running smoothly.</div>
+    </div>
+  </section>
 
   <!-- fix request CTA -->
   <section class="lcta" id="request">
     <div class="lcta-card rv">
       <h2>Got something broken? It's Fixibl.</h2>
       <div class="lcta-sub">Find out how to get it fixed.</div>
-      <p>First, fill out a fix request: tell us what's broken, snap a photo, and send it in. A fixer will claim it, message you with a bid and timeline, and arrange drop-off. Then all that's left is picking it up fixed.</p>
+      <p>First, fill out a fix request: tell us what's broken, snap a photo, and send it in. A fixer will claim it, message you with a timeline, and arrange drop-off. Then all that's left is picking it up fixed.</p>
       <button class="btn btn-orange btn-lg" onclick="startFixRequest()">Fill out a fix request</button>
-      <div class="lcta-note">About 2 minutes · Sign in to start · You'll get a bid before any work starts</div>
+      <div class="lcta-note">About 2 minutes · Sign in to start · Always free</div>
     </div>
   </section>
 
@@ -889,11 +906,11 @@ header{border-bottom:1px solid var(--line)}
       <h2>Good questions, quick answers.</h2>
     </div>
     <div class="lfaq">
-      <details class="faq-item rv"><summary><span class="fsum">What does it cost?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Your fixer gives you a bid before any work starts, and it will never be more than the price of buying a replacement. On average we aim for about 40% of the cost of a new one, built on a $5/hour base rate for our fixers. Donations are always welcome too.</div></details>
+      <details class="faq-item rv"><summary><span class="fsum">What does it cost?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Nothing — Fixibl is completely free. We're a volunteer community repair service, so there's no charge and no bidding, ever. If you'd like to help keep it running, <a href="https://buymeacoffee.com/fixiblteam" target="_blank" rel="noopener">donations</a> are always welcome, and 100% goes right back into the service.</div></details>
       <details class="faq-item rv"><summary><span class="fsum">What can I bring?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Electronics, small appliances, clothing and textiles, bikes, jewelry, computers, toys, and more. Not sure if we'd take it? Submit a request anyway. Worst case, we'll point you in the right direction.</div></details>
       <details class="faq-item rv"><summary><span class="fsum">How do drop-off and pickup work?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Once a fixer claims your request, they'll message you under My items (top right) to arrange drop-off. When the repair is done, you'll get another message there that it's ready to pick up.</div></details>
       <details class="faq-item rv"><summary><span class="fsum">How do I check on my request?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Open My items in the top corner. Your requests live on the device you sent them from, and every message from your fixer shows up there. You also leave your email and phone number with the request, so your fixer can reach you directly.</div></details>
-      <details class="faq-item rv"><summary><span class="fsum">How long does a repair take?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Your fixer gives you a bid and an estimated timeline when they claim your item. Simple fixes take a few days, trickier ones a couple of weeks. You can check in over chat anytime.</div></details>
+      <details class="faq-item rv"><summary><span class="fsum">How long does a repair take?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Your fixer gives you an estimated timeline when they claim your item. Simple fixes take a few days, trickier ones a couple of weeks. You can check in over chat anytime.</div></details>
       <details class="faq-item rv"><summary><span class="fsum">What if it can't be fixed?<span class="pm" aria-hidden="true">+</span></span></summary><div class="fa">Sometimes a thing really is beyond saving. If so, we'll tell you what we found and suggest a plan B: spare parts, recycling, or advice on a replacement. You only pay if we fix it. Either way, you'll know.</div></details>
     </div>
   </section>
@@ -905,7 +922,9 @@ header{border-bottom:1px solid var(--line)}
       <nav class="lfoot-links" aria-label="Footer">
         <a href="#how">How it works</a>
         <a href="#what">What we fix</a>
+        <a href="#donate">Donate</a>
         <a href="#faq">FAQ</a>
+        <a href="https://buymeacoffee.com/fixiblteam" target="_blank" rel="noopener">Buy us a coffee</a>
         <button type="button" onclick="openMyItems()">My items</button>
       </nav>
     </div>
@@ -949,6 +968,7 @@ header{border-bottom:1px solid var(--line)}
           <button type="button" class="pweye" id="si-pw-eye" onclick="togglePw('si-pw','si-pw-eye')" aria-label="Show password">Show</button>
         </div>
       </div>
+      <div class="auth-forgot"><b onclick="forgotPassword()">Forgot password?</b></div>
       <div class="auth-err" id="si-err"></div>
       <button class="auth-btn" onclick="signIn()">Sign in</button>
       <div class="auth-switch">Don't have an account? <b onclick="switchAuthTab('signup')">Create one</b></div>
@@ -1019,7 +1039,7 @@ header{border-bottom:1px solid var(--line)}
     <section class="view on" id="view-home">
       <div class="hero">
         <h1>The repair board.</h1>
-        <p>Open fix requests from customers. Claim one, send your bid, and chat with the owner until pickup.</p>
+        <p>Open fix requests from customers. Claim one and chat with the owner until pickup.</p>
         <div class="ruler"></div>
         <div class="hero-row">
           <button class="btn btn-orange" onclick="openSubmit()">Start a fix request</button>
@@ -1104,7 +1124,7 @@ header{border-bottom:1px solid var(--line)}
   </div>
   <div class="fixpage-head">
     <h2>Start a fix request</h2>
-    <p>Tell us what's broken. A fixer will claim it and send you a bid before any work starts.</p>
+    <p>Tell us what's broken. A fixer will claim it and get to work — repairs are free.</p>
   </div>
   <div class="modal fixpage-card">
   <div class="sst" data-step="entry">
@@ -1149,7 +1169,7 @@ header{border-bottom:1px solid var(--line)}
     <div class="success-screen">
       <div class="check">✓</div>
       <h3>Request sent!</h3>
-      <p>It's saved under <b>My items</b> on this device. When a fixer claims it, they'll message you there with a bid, so check back soon.</p>
+      <p>It's saved under <b>My items</b> on this device. When a fixer claims it, they'll message you there, so check back soon.</p>
       <button class="btn btn-primary" style="width:100%" onclick="goToMyItems()">Go to My items →</button>
     </div>
   </div>
@@ -1184,8 +1204,7 @@ header{border-bottom:1px solid var(--line)}
 <!-- CLAIM MODAL -->
 <div class="overlay" id="claimOverlay"><div class="modal">
   <div class="modal-head"><h3 id="claimTitle">Claim repair</h3><button class="x" onclick="close_('claimOverlay')" aria-label="Close">×</button></div>
-  <p class="msub">You're taking this on. Your bid and timeline will be sent to the owner as a message.</p>
-  <div class="field"><label for="c-bid">Your bid <span class="opt">(never more than a replacement costs)</span></label><input id="c-bid" placeholder="e.g. $12"></div>
+  <p class="msub">You're taking this on. Your timeline will be sent to the owner as a message. Repairs are free.</p>
   <div class="field"><label>Estimated timeline</label><select id="c-timeline"><option>A few days</option><option>About a week</option><option>1–2 weeks</option><option>2–3 weeks</option><option>Longer / not sure yet</option></select></div>
   <div class="field"><label>Note to the owner <span class="opt">(optional)</span></label><textarea id="c-note" placeholder="e.g. Need to order a part first."></textarea></div>
   <div class="err" id="c-err"></div>
@@ -1444,7 +1463,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
   getAuth, onAuthStateChanged,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
   GoogleAuthProvider, signInWithPopup, signInAnonymously,
   signOut as fbSignOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1686,6 +1705,24 @@ async function signIn(){
     }
     // verified → onAuthStateChanged will boot the app
   }catch(e){ err.style.color=''; err.textContent=authErrMsg(e); }
+}
+
+async function forgotPassword(){
+  const email=document.getElementById('si-email').value.trim().toLowerCase();
+  const err=document.getElementById('si-err');
+  err.style.color='';
+  if(!email){ err.textContent='Enter your email above first, then tap “Forgot password?”.'; return; }
+  if(!validEmail(email)){ err.textContent='That doesn\'t look like a valid email.'; return; }
+  try{
+    await sendPasswordResetEmail(auth, email);
+    err.style.color='#2f7d4f';
+    err.textContent='Password reset link sent to '+email+'. Check your inbox.';
+  }catch(e){
+    const c=(e&&e.code)||'';
+    // Don't reveal whether an account exists.
+    if(c.includes('user-not-found')){ err.style.color='#2f7d4f'; err.textContent='If an account exists for '+email+', a reset link is on its way.'; }
+    else err.textContent=authErrMsg(e);
+  }
 }
 
 async function signUp(){
@@ -2304,7 +2341,7 @@ function itemCard(i){
   let block='';
   if(i.status==='awaiting')block=clubMode?`<div class="act"><button class="claim" onclick="openClaim('${i.id}')">Claim repair</button></div>`:isMyItem?`<div class="locked">Waiting for a fixer to claim it</div>`:`<div class="locked">Waiting for a fixer</div>`;
   else if(i.status==='progress'){
-    block=`<div class="timeline-box"><b>${esc(i.fixer)}</b> is on it${i.bid?` · bid <b>${esc(i.bid)}</b>`:''} · est. <b>${esc(i.timeline)}</b></div>`;
+    block=`<div class="timeline-box"><b>${esc(i.fixer)}</b> is on it · est. <b>${esc(i.timeline)}</b></div>`;
     // Only the submitter or the actual fixer should see Chat — they're the only ones who'll find this thread on their list page.
     const canChat=isMyItem||isMyRepair;
     const chatTarget=isMyItem?'myitems':'myrepairs';
@@ -2415,7 +2452,6 @@ function miCard(i){
     <div class="mi-head">
       <div class="mi-top"><h3>${esc(i.name)}</h3></div>
       <div class="mi-stat ${i.status}">${statusTxt}</div>
-      ${i.bid?`<div class="mi-timeline">Bid ${esc(i.bid)}</div>`:''}
       ${i.timeline?`<div class="mi-timeline">Est. ${esc(i.timeline)}</div>`:''}
       ${(mineToFix&&(i.email||i.phone))?`<div class="mi-timeline">${esc(i.email||'')}${i.phone?' · '+esc(i.phone):''}</div>`:''}
       <div class="mi-timeline" style="margin-top:4px">${esc(i.sub)} · submitted ${ago(i.submittedAt)}</div>
@@ -2635,12 +2671,12 @@ async function submitItem(){
     firstName:first, lastName:last, email, phone,
     drop:'',
     photo:pendingPhoto,
-    status:'awaiting',fixer:null,fixerId:null,timeline:null,bid:null,
+    status:'awaiting',fixer:null,fixerId:null,timeline:null,
     submittedAt:new Date().toISOString(),claimedAt:null,readyAt:null
   };
   const ok=await saveItem(newItem);
   if(!ok){err.textContent='Could not send your request. Please try again in a minute.';return;}
-  await addMsg(id,{id:uid(),role:'sys',text:'Fix request sent. Your fixer will message you here with a bid once they claim it.',ts:new Date().toISOString()});
+  await addMsg(id,{id:uid(),role:'sys',text:'Fix request sent. Your fixer will message you here once they claim it.',ts:new Date().toISOString()});
   // The submitter has "seen" the system message they just caused.
   markSeen(id);
   if(currentUser.anon) startCustomerListeners();
@@ -2660,7 +2696,6 @@ function openClaim(id){
   claimTarget=id;
   const i=items.find(x=>x.id===id);
   document.getElementById('claimTitle').textContent='Claim: '+i.name;
-  document.getElementById('c-bid').value='';
   document.getElementById('c-note').value='';
   document.getElementById('c-err').textContent='';
   open_('claimOverlay');
@@ -2668,13 +2703,11 @@ function openClaim(id){
 async function confirmClaim(){
   const i=items.find(x=>x.id===claimTarget);if(!i)return;
   const timeline=document.getElementById('c-timeline').value;
-  const bidV=val('c-bid');
   const note=val('c-note');
-  if(!bidV){ document.getElementById('c-err').textContent='Enter your bid first. It should never be more than a replacement costs.'; return; }
-  const ok=await updateItem(i.id,{status:'progress',fixer:currentUser.name,fixerId:currentUser.id,fixerEmail:(currentUser.email||'').toLowerCase(),timeline,bid:bidV,claimedAt:new Date().toISOString()});
+  const ok=await updateItem(i.id,{status:'progress',fixer:currentUser.name,fixerId:currentUser.id,fixerEmail:(currentUser.email||'').toLowerCase(),timeline,claimedAt:new Date().toISOString()});
   if(!ok){ document.getElementById('c-err').textContent='Could not claim this. You may not have fixer access yet. Ask the club admin.'; return; }
-  await addMsg(i.code,{id:uid(),role:'sys',text:`${currentUser.name} claimed this repair · bid ${bidV} · est. ${timeline}`,ts:new Date().toISOString()});
-  await addMsg(i.code,{id:uid(),role:'fixer',who:currentUser.name,text:`Hi! I picked up your ${i.name}. My bid is ${bidV} and I'm planning to have it back to you in about ${timeline.toLowerCase()}. Reply here with any questions.`,ts:new Date(Date.now()+500).toISOString()});
+  await addMsg(i.code,{id:uid(),role:'sys',text:`${currentUser.name} claimed this repair · est. ${timeline}`,ts:new Date().toISOString()});
+  await addMsg(i.code,{id:uid(),role:'fixer',who:currentUser.name,text:`Hi! I picked up your ${i.name} and I'm planning to have it back to you in about ${timeline.toLowerCase()}. Reply here with any questions.`,ts:new Date(Date.now()+500).toISOString()});
   if(note)await addMsg(i.code,{id:uid(),role:'fixer',who:currentUser.name,text:note,ts:new Date(Date.now()+1000).toISOString()});
   close_('claimOverlay');toast('Claimed. Owner notified via chat');
 }
@@ -2793,7 +2826,7 @@ document.getElementById('su-pw').addEventListener('keydown',e=>{if(e.key==='Ente
    scope — functions are NOT global by default.)
    ========================================================= */
 Object.assign(window,{
-  switchAuthTab, signIn, signUp, googleSignIn, signOut, togglePw,
+  switchAuthTab, signIn, signUp, googleSignIn, signOut, togglePw, forgotPassword,
   showView, setFilter, renderItems, gotoChat,
   openSubmit, openApp, closeApp, skipAI, startAI, setSubStep, pickOpt, submitAnswers,
   backFromContact, submitItem, toContactStep, goToMyItems, renderMyItems, close_,
