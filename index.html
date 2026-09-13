@@ -2358,10 +2358,10 @@ function renderModeUI(){
   // Home page hint — explains how club access works now
   const hint=document.getElementById('modeHint');
   if(hint){
-    if(admin)                      hint.innerHTML='Signed in as <b>admin</b>. You can manage fixers, listings, and claim repairs.';
-    else if(isAdmin()&&clubMode)   hint.innerHTML='Previewing the <b>fixer view</b>. Use the switch up top to change it.';
-    else if(clubMode)              hint.innerHTML='Signed in as a <b>fixer</b>. You can claim repairs and chat with submitters.';
-    else if(isAdmin())             hint.innerHTML='Previewing the <b>user view</b>. Use the switch up top to change it.';
+    if(admin)                      hint.innerHTML='Signed in as <b>admin</b>.';
+    else if(isAdmin()&&clubMode)   hint.innerHTML='Previewing the <b>fixer view</b>.';
+    else if(clubMode)              hint.innerHTML='Signed in as a <b>fixer</b>.';
+    else if(isAdmin())             hint.innerHTML='Previewing the <b>user view</b>.';
     else                           hint.innerHTML='';
   }
   // Fixers tab hint
