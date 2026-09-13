@@ -2367,9 +2367,9 @@ function renderModeUI(){
   // Fixers tab hint
   const fixHint=document.getElementById('fixHint');
   if(fixHint){
-    if(admin)         fixHint.innerHTML='You\'re an <b>admin</b>. Add or edit fixers below.';
-    else if(clubMode) fixHint.innerHTML='You\'re a <b>fixer</b> on this crew.';
-    else              fixHint.innerHTML='Meet the crew. Want to join? Ask the club admin to add you.';
+    if(admin)         fixHint.innerHTML='You\'re an <b>admin</b>.';
+    else if(clubMode) fixHint.innerHTML='You\'re a <b>fixer</b>. If you have any concerns about your information or want to add a bio/specialty, contact Landon Olson (<a href="mailto:landon.olson@menloschool.org">landon.olson@menloschool.org</a>).';
+    else              fixHint.innerHTML='Meet the crew. Want to join? Email <a href="mailto:join@fixibl.com">join@fixibl.com</a>';
   }
   // Add fixer button → admin only
   const addBtn=document.getElementById('addFixerBtn');
