@@ -2880,7 +2880,7 @@ async function saveFixer(){
   const name=val('f-name'),spec=val('f-spec'),bio=val('f-bio');
   const email=(val('f-email')||'').toLowerCase();
   const err=document.getElementById('f-err');
-  if(!name||!spec||!bio||!email){err.textContent='Fill in name, specialty, email, and bio.';return;}
+  if(!name||spec||bio||!email){err.textContent='Fill in name and email';return;}
   if(!validEmail(email)){err.textContent='That email doesn\'t look valid.';return;}
   // Uniqueness — no two fixers share the same email
   const clash=fixers.find(f=>(f.email||'').toLowerCase()===email && f.id!==editFixerId);
